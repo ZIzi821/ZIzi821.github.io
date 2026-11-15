@@ -57,10 +57,7 @@ h1 { font-size: 27px; font-weight: 600; letter-spacing: -.01em; color: var(--fg)
 .tile.in { opacity: 1; transform: none; }
 .tile[data-open], .tile[data-href] { cursor: pointer; }
 .tile[data-open]:hover, .tile[data-href]:hover { border-color: var(--line2); box-shadow: 0 20px 60px rgba(0,0,0,.6); transform: translateY(-3px); }
-.cover { position: relative; overflow: hidden; background:
-  radial-gradient(120% 80% at 50% 0%, rgba(143,167,199,.10), transparent 62%),
-  repeating-linear-gradient(0deg, rgba(255,255,255,.022) 0 1px, transparent 1px 24px),
-  repeating-linear-gradient(90deg, rgba(255,255,255,.022) 0 1px, transparent 1px 24px), #0f0f10; }
+.cover { position: relative; overflow: hidden; background: radial-gradient(120% 80% at 50% 0%, rgba(143,167,199,.10), transparent 62%), #0f0f10; }
 .tall .cover { aspect-ratio: 4 / 5; } .wide .cover { aspect-ratio: 16 / 10.5; } .square .cover { aspect-ratio: 1 / 1; } .short .cover { aspect-ratio: 16 / 7.5; }
 .cap { position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 30px 16px 12px;
   background: linear-gradient(transparent, rgba(0,0,0,.86)); font-size: 13.5px; opacity: 0; transform: translateY(6px); transition: opacity .3s, transform .3s; pointer-events: none; }
