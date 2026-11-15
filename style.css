@@ -185,8 +185,15 @@ h1 { font-size: 27px; font-weight: 600; letter-spacing: -.01em; color: var(--fg)
 /* ---------- text tiles ---------- */
 .tile.note, .tile.stat, .tile.quote { padding: 24px 24px 22px; }
 .tile.note { background: radial-gradient(130% 80% at 0% 0%, rgba(143,167,199,.15), transparent 55%), var(--card); }
-.tile.note.beam, .tile.quote { background: linear-gradient(180deg, rgba(120,90,220,.30), rgba(60,40,120,.08) 46%, transparent 70%),
-  repeating-linear-gradient(100deg, rgba(190,160,255,.10) 0 14px, transparent 14px 46px), #100e16; }
+/* a paper-coloured card: breaks up the dark wall the way a printed note would */
+.tile.note.paper { background: #efede8; border-color: transparent; }
+.paper .mark { color: #5d5a54; border-color: rgba(0,0,0,.22); }
+.paper .q { color: #17150f; font-size: 17px; }
+.paper .src { color: #6c6962; }
+/* the quote: flat, quiet, set like a pull quote */
+.tile.quote { padding: 26px 28px 24px; background: #111; border-color: var(--line2); }
+.tile.quote::before { content: ""; position: absolute; left: 0; top: 26px; bottom: 26px; width: 2px; background: var(--ice2); }
+.tile.quote .q { margin-top: 2px; font-size: 17px; line-height: 1.75; color: var(--fg); }
 .mark { display: inline-block; font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em; color: var(--mute); padding: 3px 8px; border: 1px solid var(--line2); border-radius: 999px; }
 .q { margin-top: 16px; font-size: 16.5px; line-height: 1.62; color: var(--fg); }
 .src { margin-top: 16px; font-size: 12.5px; color: var(--mute); } .src a { border-bottom: 1px dashed currentColor; }
@@ -197,7 +204,11 @@ h1 { font-size: 27px; font-weight: 600; letter-spacing: -.01em; color: var(--fg)
 .big { font-size: 34px; font-weight: 600; color: var(--fg); letter-spacing: -.02em; font-variant-numeric: tabular-nums; line-height: 1.2; }
 .big i { font-style: normal; color: var(--dim); margin: 0 .1em; }
 .sub { margin-top: 12px; color: var(--mute); font-size: 14px; }
-.qm { font-size: 34px; line-height: 1; color: var(--fg); } .who { margin-top: 18px; font-size: 13.5px; color: var(--mute); } .who b { color: var(--fg); font-weight: 600; margin-right: 8px; }
+.qm { display: block; font-family: Georgia, "Times New Roman", "Songti SC", serif; font-size: 56px; line-height: .8; height: 30px; color: var(--ice2); }
+.who { margin-top: 22px; display: flex; align-items: center; gap: 12px; }
+.who i { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line2); display: grid; place-items: center; font-style: normal; font-family: var(--mono); font-size: 11.5px; color: var(--fg2); background: #181818; }
+.who b { display: block; color: var(--fg); font-weight: 600; font-size: 14px; line-height: 1.3; } .who small { display: block; color: var(--mute); font-size: 12.5px; }
+.bio span { display: block; }
 
 /* ================= prose views ================= */
 .prose { max-width: 720px; margin: 0 auto; padding-top: 10px; }

@@ -166,6 +166,7 @@
     $('[data-quote-text]', quote).textContent = QUOTE.text;
     $('[data-quote-name]', quote).textContent = QUOTE.name;
     $('[data-quote-role]', quote).textContent = QUOTE.role;
+    $('[data-quote-initials]', quote).textContent = QUOTE.name.split(/\s+/).map(function (w) { return w.charAt(0); }).join('').slice(0, 2).toUpperCase();
     quote.hidden = false;
   } else if (quote) { quote.parentNode.removeChild(quote); }
 
