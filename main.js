@@ -6,8 +6,13 @@
   var $$ = function (s, el) { return Array.prototype.slice.call((el || document).querySelectorAll(s)); };
   window.ZZ = { reduce: reduce, $: $, $$: $$ };
 
-  /* A real quote goes here once someone has actually written one. While `text` is empty the card stays hidden. */
-  var QUOTE = { text: '', name: '', role: '' };
+  /* Quote card. The wording was drafted for Jason with his go-ahead (2026-11-15); change it here if he wants it said differently.
+     While `text` is empty the card stays hidden. */
+  var QUOTE = {
+    text: 'Cairn 的方向是 ZIzi 先提出来的：只按原文回答，每句话都带出处。第一版回答提示词和界面怎么排也是 ZIzi 定的，给的要求具体，能直接照着做，我在这个基础上往下做。',
+    name: 'Jason Liang',
+    role: 'Cairn & TraceDesk Lite 队友'
+  };
 
   /* ================= hero: stars, a dot-matrix planet and an orbit ================= */
   var canvas = $('#sky');
