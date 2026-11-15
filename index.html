@@ -1,377 +1,350 @@
 <!doctype html>
-<html lang="zh-CN" data-theme="dark">
+<html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Yanyu Zhu（ZIzi）· 作品集</title>
 <meta name="description" content="Yanyu Zhu（ZIzi）的作品集：AI 应用的 Prompt、RAG、工作流与评测，以及用 SQL、Python、R 做的数据分析项目。">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0f17'/%3E%3Cpath d='M18 20h28L18 44h28' fill='none' stroke='%235eead4' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#0b0b0b">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0b0b'/%3E%3Cpath d='M19 20h26L19 44h26' fill='none' stroke='%23d6e2f5' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="progress" id="progress"></div>
-<div class="glow" id="glow" aria-hidden="true"></div>
 
-<header class="nav" id="nav">
-  <a class="brand" href="#top" aria-label="回到顶部"><span class="brand-mark">Z</span><span>ZIzi</span></a>
-  <nav class="nav-links" aria-label="页面导航">
-    <a href="#projects">项目</a>
-    <a href="#notes">复盘</a>
-    <a href="#experience">经历</a>
-    <a href="#more">小作品</a>
-  </nav>
-  <div class="nav-actions">
-    <button class="icon-btn" id="themeBtn" type="button" aria-label="切换明暗主题" title="切换明暗主题">
-      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path class="sun" d="M12 4V2m0 20v-2m8-8h2M2 12h2m13.7-5.7 1.4-1.4M4.9 19.1l1.4-1.4m0-11.4L4.9 4.9m14.2 14.2-1.4-1.4M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-    </button>
-    <a class="btn btn-ghost" href="https://github.com/ZIzi821" target="_blank" rel="noopener">GitHub</a>
+<main>
+
+<!-- ================= 首屏 ================= -->
+<header class="hero">
+  <canvas id="field" aria-hidden="true"></canvas>
+  <div class="hero-text">
+    <h1 class="rise">Yanyu Zhu</h1>
+    <p class="role rise" style="--d:.08s">ZIZI · 应用数据科学 · MONASH UNIVERSITY</p>
+    <p class="bio rise" style="--d:.16s">我把具体问题做成能用的东西，再量一量它到底好不好。AI 应用方向做 Prompt、RAG、工作流和评测；数据方向用 SQL、Python、R 做分析和看板。</p>
+    <div class="cta rise" style="--d:.24s">
+      <a class="btn solid" href="#works" data-tab="works">看作品</a>
+      <a class="btn" href="https://github.com/ZIzi821" target="_blank" rel="noopener">GitHub <span class="ext">↗</span></a>
+    </div>
+    <p class="avail rise" style="--d:.32s"><i></i>2026 年 11 月底起可实习</p>
   </div>
 </header>
 
-<main id="top">
+<!-- ================= 作品 ================= -->
+<section class="view is-active" id="works" data-view="works" aria-label="作品">
+  <ul class="mosaic">
 
-<!-- ============ HERO ============ -->
-<section class="hero">
-  <canvas id="field" aria-hidden="true"></canvas>
-  <div class="hero-inner">
-    <p class="eyebrow reveal">Monash University · 应用数据科学本科在读（2025 – 2028）</p>
-    <h1 class="reveal" style="--d:.08s">把具体问题做成能用的东西，<br><span class="grad">再量一量它到底好不好。</span></h1>
-    <p class="lead reveal" style="--d:.16s">我是 Yanyu Zhu（ZIzi）。AI 应用方向做 Prompt、RAG、工作流和评测；数据方向用 SQL、Python、R 做分析和看板。</p>
-    <p class="typed reveal" style="--d:.24s" aria-hidden="true"><span class="typed-label">最近在做</span><span id="typed"></span><span class="caret"></span></p>
-    <div class="hero-cta reveal" style="--d:.32s">
-      <a class="btn btn-primary magnetic" href="#projects">看项目</a>
-      <a class="btn btn-ghost magnetic" href="https://github.com/ZIzi821" target="_blank" rel="noopener">GitHub 主页</a>
-    </div>
-  </div>
-  <div class="stats">
-    <div class="stat reveal" style="--d:.1s"><div class="stat-num"><span class="count" data-to="0.950" data-dec="3">0.950</span></div><div class="stat-label">内容审核 Workflow 测试集 Macro-F1<br>（改提示词前 0.795）</div></div>
-    <div class="stat reveal" style="--d:.18s"><div class="stat-num"><span class="count" data-to="44" data-dec="0">44</span><span class="stat-unit">/45</span></div><div class="stat-label">Cairn 中英检索评测<br>Top-5 命中</div></div>
-    <div class="stat reveal" style="--d:.26s"><div class="stat-num"><span class="count" data-to="34.3" data-dec="1">34.3</span><span class="stat-unit">%</span></div><div class="stat-label">电商延误率情景测算<br>（原 57.3%）</div></div>
-    <div class="stat reveal" style="--d:.34s"><div class="stat-num"><span class="count" data-to="40" data-dec="0">40</span><span class="stat-unit">页</span></div><div class="stat-label">教学微信小程序<br>持续用于真实教学</div></div>
-  </div>
-  <a class="scroll-hint" href="#projects" aria-label="向下看项目"><span></span></a>
+    <li class="tile project" data-open="d-workflow" tabindex="0" role="button" aria-label="内容审核预标注 Workflow，查看详情">
+      <div class="viz pad">
+        <div class="pipe">
+          <span>检索规则</span><i></i><span>大模型判定</span><i></i><span>代码核对</span><i></i><span class="two"><em class="w">人工复核</em><em class="o">自动标注</em></span>
+        </div>
+        <div class="vs">
+          <div><label>Macro-F1</label><b class="bar a" data-w="79.5"><u>v1 0.795</u></b><b class="bar b" data-w="95"><u>v2 0.950</u></b></div>
+          <div><label>漏判率</label><b class="bar a" data-w="25"><u>v1 25.0%</u></b><b class="bar b" data-w="5"><u>v2 5.0%</u></b></div>
+        </div>
+      </div>
+      <div class="cap"><span class="name">内容审核预标注 Workflow</span><span class="kind">AI 应用 · 评测</span></div>
+    </li>
+
+    <li class="tile note light">
+      <span class="mark">发现</span>
+      <p class="q">准确率从 80.0% 升到 95.0%，置信度分流却失效了：送人工的 9 条全部判对，4 条错例全都进了自动标注。</p>
+      <div class="dotrow"><span class="dots" data-total="10" data-hit="9"></span><small>v1 送人工 10 条，9 条确实判错</small></div>
+      <div class="dotrow"><span class="dots" data-total="9" data-hit="0"></span><small>v2 送人工 9 条，0 条判错</small></div>
+      <p class="src">内容审核 Workflow · <a href="#notes" data-tab="notes">看复盘</a></p>
+    </li>
+
+    <li class="tile img" data-open="d-ecom" tabindex="0" role="button" aria-label="电商运营分析，查看详情">
+      <img loading="lazy" src="assets/ecom-trend.png" alt="R Shiny 看板的月度趋势页">
+      <div class="cap"><span class="name">电商运营分析</span><span class="kind">SQL · 看板 · 预测</span></div>
+    </li>
+
+    <li class="tile img" data-open="d-workflow" tabindex="0" role="button" aria-label="扣子画布上的工作流，查看详情">
+      <img loading="lazy" src="assets/workflow-canvas.jpg" alt="扣子画布上的评论审核工作流">
+      <div class="cap"><span class="name">扣子画布</span><span class="kind">内容审核 Workflow</span></div>
+    </li>
+
+    <li class="tile project" data-open="d-cairn" tabindex="0" role="button" aria-label="Cairn 与 TraceDesk Lite，查看详情">
+      <div class="viz pad">
+        <p class="vt">45 题中英评测集 · 七种检索方案的 MRR@10</p>
+        <div class="mm"><label>BM25</label><b class="bar a" data-w="37.5"><u>0.375</u></b></div>
+        <div class="mm"><label>混合检索</label><b class="bar a" data-w="59"><u>0.590</u></b></div>
+        <div class="mm"><label>RRF 融合</label><b class="bar a" data-w="70.3"><u>0.703</u></b></div>
+        <div class="mm"><label>向量</label><b class="bar a" data-w="70.9"><u>0.709</u></b></div>
+        <div class="mm"><label>RRF + 重排</label><b class="bar a" data-w="75.4"><u>0.754</u></b></div>
+        <div class="mm"><label>向量 + 重排</label><b class="bar a" data-w="76.2"><u>0.762</u></b></div>
+        <div class="mm best"><label>翻译 + 向量 + 重排</label><b class="bar b" data-w="83.9"><u>0.839</u></b></div>
+      </div>
+      <div class="cap"><span class="name">Cairn &amp; TraceDesk Lite</span><span class="kind">黑客松 · RAG</span></div>
+    </li>
+
+    <li class="tile stat">
+      <p class="big"><span class="count" data-to="57.3" data-dec="1">57.3</span>% <i>→</i> <span class="count" data-to="34.3" data-dec="1">34.3</span>%</p>
+      <p class="sub">延误主要来自承诺时效的设定：First Class 承诺 1 天，实际 2 天。按实际时效设定承诺，全网延误率的情景测算。</p>
+      <p class="src">电商运营分析</p>
+    </li>
+
+    <li class="tile img light-img" data-open="d-ecom" tabindex="0" role="button" aria-label="cohort 留存热力图，查看详情">
+      <img loading="lazy" src="assets/ecom-cohort.png" alt="看板中的 cohort 留存页">
+      <div class="cap"><span class="name">cohort 留存</span><span class="kind">电商运营分析</span></div>
+    </li>
+
+    <li class="tile project" data-open="d-app" tabindex="0" role="button" aria-label="朱老师英语课堂，查看详情">
+      <div class="viz pad">
+        <div class="steps"><span><b>1</b>先背单词</span><i></i><span><b>2</b>个性化小测</span><i></i><span><b>3</b>课后任务</span></div>
+        <div class="trio">
+          <div><strong><span class="count" data-to="40" data-dec="0">40</span></strong><small>个页面<br>老师 / 学生双角色</small></div>
+          <div><strong><span class="count" data-to="22" data-dec="0">22</span>+<span class="count" data-to="12" data-dec="0">12</span></strong><small>测试文件 + 校验脚本<br>全部通过才上传</small></div>
+          <div><strong>12</strong><small>套 KET<br>口语模考</small></div>
+        </div>
+      </div>
+      <div class="cap"><span class="name">朱老师英语课堂</span><span class="kind">微信小程序 · AI 编程</span></div>
+    </li>
+
+    <li class="tile note">
+      <span class="mark">发现</span>
+      <p class="q">从 2017 年 10 月起，每个月的新客占比都是 100%。不是业务变化，是客户 ID 断档：每笔订单都被算成了一个新客户。</p>
+      <p class="src">电商运营分析 · <a href="#notes" data-tab="notes">看复盘</a></p>
+    </li>
+
+    <li class="tile img white" data-open="d-stats" tabindex="0" role="button" aria-label="A/B 实验中提前偷看的假阳性，查看详情">
+      <img loading="lazy" src="assets/ab-peeking.png" alt="A/A 测试中提前偷看导致的假阳性率">
+      <div class="cap"><span class="name">统计建模与 A/B 实验</span><span class="kind">R</span></div>
+    </li>
+
+    <li class="tile stat">
+      <p class="big"><span class="count" data-to="44" data-dec="0">44</span><em>/45</em></p>
+      <p class="sub">Cairn 采用的检索方案在 45 题中英评测集上的 Top-5 命中。实时测试里 22 / 22 条引文通过服务器逐字核对。</p>
+      <p class="src">Cairn &amp; TraceDesk Lite</p>
+    </li>
+
+    <li class="tile img" data-open="d-ecom" tabindex="0" role="button" aria-label="延误预测的特征重要性，查看详情">
+      <img loading="lazy" src="assets/ecom-model.png" alt="延误预测模型的特征重要性">
+      <div class="cap"><span class="name">延误预测</span><span class="kind">AUC 0.777</span></div>
+    </li>
+
+    <li class="tile note">
+      <span class="mark">发现</span>
+      <p class="q">两组没有任何差别的 A/A 测试，每天看一次、显著就停，假阳性从 4.3% 升到 20.1%。</p>
+      <div class="peek"><div><b data-h="21.4"><u>4.3%</u></b><small>结束才看</small></div><div><b class="hot" data-h="100"><u>20.1%</u></b><small>每天偷看</small></div></div>
+      <p class="src">A/B 实验 · 2,000 次模拟 · <a href="#notes" data-tab="notes">看复盘</a></p>
+    </li>
+
+    <li class="tile small" data-href="https://github.com/ZIzi821/teachloop-skills" tabindex="0" role="link">
+      <span class="mark">AI SKILL</span>
+      <h3>teachloop-skills</h3>
+      <p>把小程序里反复用到的教学设计判断整理成 AI Skill：一个入口文件加 5 份参考，用 8 个需求场景和 3 个不该触发的请求做行为评测。</p>
+      <span class="go">仓库 ↗</span>
+    </li>
+
+    <li class="tile img" data-open="d-workflow" tabindex="0" role="button" aria-label="批量评测工作流，查看详情">
+      <img loading="lazy" src="assets/workflow-eval.jpg" alt="批量评测工作流的试运行">
+      <div class="cap"><span class="name">批量评测工作流</span><span class="kind">120 条标注样本</span></div>
+    </li>
+
+    <li class="tile img white" data-href="https://github.com/ZIzi821/Teaching-Students-English-Classroom-Quiz" tabindex="0" role="link">
+      <img loading="lazy" src="assets/quiz.png" alt="英语课堂练习站首页">
+      <div class="cap"><span class="name">英语课堂练习站</span><span class="kind">离线练习页 ↗</span></div>
+    </li>
+
+    <li class="tile note light">
+      <span class="mark">一个修复</span>
+      <p class="q">手机上读音加载慢、偶尔播不出。原因是每次播放都要先加载整段合辑；改成每个单词一个短音频，加上超时重试、合辑回退和当日待学词预缓存。</p>
+      <p class="src">朱老师英语课堂</p>
+    </li>
+
+    <li class="tile small" data-href="https://github.com/ZIzi821/Cpp-Data-Structures-Algorithms" tabindex="0" role="link">
+      <span class="mark">C++</span>
+      <h3>数据结构与算法</h3>
+      <p>手写链表、BST、堆、可扩容哈希表等 14 个任务，用不变量测试和 5,000 次随机对拍验证。</p>
+      <span class="go">仓库 ↗</span>
+    </li>
+
+    <li class="tile img light-img" data-open="d-ecom" tabindex="0" role="button" aria-label="运输方式与延误的热力图，查看详情">
+      <img loading="lazy" src="assets/ecom-heatmap.png" alt="运输方式与延误的热力图">
+      <div class="cap"><span class="name">运输方式 × 延误</span><span class="kind">电商运营分析</span></div>
+    </li>
+
+    <li class="tile small" data-href="https://zizi821.github.io/ZIzi_Game/" tabindex="0" role="link">
+      <span class="mark">早期练手 · 三人团队</span>
+      <h3>ZIzi Game</h3>
+      <p>4 款网页小游戏和一个带云存档的兵棋沙盒，我负责游戏与前端。排行榜用 Firebase，读取超时回退到 JSON 缓存，缓存由 GitHub Actions 定时导出。</p>
+      <span class="go">在线试玩 ↗</span>
+    </li>
+
+  </ul>
 </section>
 
-<!-- ============ PROJECTS ============ -->
-<section class="section" id="projects">
-  <div class="section-head reveal">
-    <p class="kicker">01 · 项目</p>
-    <h2>五个写得出过程、给得出数字的项目</h2>
-    <p class="section-sub">每个项目都有公开仓库。点卡片上的“展开”看问题、做法和结果。</p>
-  </div>
-
-  <!-- 1 Workflow -->
-  <article class="card project reveal tilt" id="p-workflow">
-    <div class="card-top">
-      <div>
-        <p class="tag">AI 应用 · 评测</p>
-        <h3>内容审核预标注 Workflow</h3>
-        <p class="one">在扣子上搭的评论审核预标注流程：先检索规则，再让大模型判定，代码节点核对，拿不准的转人工。</p>
-      </div>
-      <div class="chips">
-        <span class="chip">扣子（Coze）</span><span class="chip">知识库检索</span><span class="chip">Python 代码节点</span><span class="chip">pandas / scikit-learn</span>
-      </div>
-    </div>
-
-    <div class="pipeline" aria-label="工作流示意：知识库检索、大模型判定、代码核对、分流">
-      <div class="node"><b>知识库检索</b><small>规则库召回 3 条</small></div>
-      <div class="link"><i></i></div>
-      <div class="node"><b>大模型判定</b><small>类别 · 规则编号 · 原文证据 · 置信度</small></div>
-      <div class="link"><i></i></div>
-      <div class="node"><b>代码核对</b><small>规则编号与证据是否属实</small></div>
-      <div class="link split"><i></i></div>
-      <div class="node-pair">
-        <div class="node warn"><b>人工复核</b><small>置信度 &lt; 0.7 或核对失败</small></div>
-        <div class="node ok"><b>自动标注</b><small>其余</small></div>
-      </div>
-    </div>
-
-    <div class="compare">
-      <div class="bar-row"><span class="bar-name">Macro-F1</span>
-        <div class="bars"><div class="bar v1" data-w="79.5"><em>v1 · 0.795</em></div><div class="bar v2" data-w="95"><em>v2 · 0.950</em></div></div></div>
-      <div class="bar-row"><span class="bar-name">漏判率</span>
-        <div class="bars"><div class="bar v1" data-w="25"><em>v1 · 25.0%</em></div><div class="bar v2" data-w="5"><em>v2 · 5.0%</em></div></div></div>
-      <div class="bar-row"><span class="bar-name">攻击辱骂识别</span>
-        <div class="bars"><div class="bar v1" data-w="45"><em>v1 · 9 / 20</em></div><div class="bar v2" data-w="90"><em>v2 · 18 / 20</em></div></div></div>
-    </div>
-
-    <details class="more">
-      <summary><span>展开：问题、做法、结果</span></summary>
-      <div class="more-grid">
-        <div>
-          <h4>问题</h4>
-          <p>审核或标注团队想先让模型做一遍预标注：把握大的直接入库，有疑问的交给人。所以要看两件事：分对了多少，以及送人工的那部分是不是真的该给人看。</p>
-          <h4>做法</h4>
-          <ul>
-            <li>自建 120 条标注样本，4 个类别，开发 40 条、测试 80 条；用批处理工作流批量运行。</li>
-            <li>按类别统计 Precision / Recall / F1、漏判率、误判率和人工复核比例。</li>
-            <li>只看开发集的错例做归因：规则没被检索到、个人贬损和反讽没有覆盖。v2 只改提示词。</li>
-          </ul>
-          <h4>结果</h4>
-          <ul>
-            <li>测试集准确率 80.0% → 95.0%，Macro-F1 0.795 → 0.950，漏判率 25.0% → 5.0%，误判率保持 0。</li>
-            <li>人工复核比例 11.2%。</li>
-            <li>同时发现一个新问题：v2 的置信度分流失效了，见下面的<a href="#n-routing">复盘</a>。</li>
-          </ul>
-          <p class="links"><a href="https://github.com/ZIzi821/content-review-workflow" target="_blank" rel="noopener">仓库与完整指标 →</a></p>
-        </div>
-        <figure><img loading="lazy" src="assets/workflow-canvas.jpg" alt="扣子画布上的评论审核工作流"><figcaption>扣子画布上的工作流</figcaption></figure>
-      </div>
-    </details>
-  </article>
-
-  <!-- 2 Ecommerce -->
-  <article class="card project reveal tilt" id="p-ecom">
-    <div class="card-top">
-      <div>
-        <p class="tag">数据分析 · SQL · 看板</p>
-        <h3>电商运营分析</h3>
-        <p class="one">同一份数据做三层：R Shiny 交互看板、10 个 DuckDB SQL 查询、Python 延误预测。三层口径一致，SQL 结果和看板逐项交叉核对。</p>
-      </div>
-      <div class="chips"><span class="chip">SQL（DuckDB）</span><span class="chip">R Shiny</span><span class="chip">Python</span></div>
-    </div>
-    <div class="kpis">
-      <div class="kpi"><b><span class="count" data-to="180519" data-dec="0" data-sep="1">180,519</span></b><small>条订单明细，聚合为 65,752 笔订单</small></div>
-      <div class="kpi"><b>57.3% <i>→</i> <span class="count" data-to="34.3" data-dec="1">34.3</span>%</b><small>按实际时效设定承诺后的全网延误率（情景测算）</small></div>
-      <div class="kpi"><b>AUC <span class="count" data-to="0.777" data-dec="3">0.777</span></b><small>延误预测，只用下单时可知的特征，按时间切分</small></div>
-    </div>
-    <details class="more">
-      <summary><span>展开：问题、做法、结果</span></summary>
-      <div class="more-grid">
-        <div>
-          <h4>问题</h4>
-          <p>配送延误率很高。延误来自哪里？下单时能不能预判？</p>
-          <h4>做法</h4>
-          <ul>
-            <li>写了 10 个查询：窗口函数做排名与环比、cohort 留存、RFM 分层；结果和 R Shiny 看板交叉核对。</li>
-            <li>按运输方式拆解延误，再做情景测算。</li>
-            <li>建模只取下单时已知的特征，按时间切分训练集和测试集。</li>
-          </ul>
-          <h4>结果</h4>
-          <ul>
-            <li>延误主要来自承诺时效的设定：First Class 承诺 1 天，实际 2 天。按实际时效设定承诺，全网延误率由 57.3% 降到 34.3%。</li>
-            <li>梯度提升模型 AUC 0.777、延误召回率 0.623，比“按运输方式判断”的规则基线多识别约 8 个百分点的延误订单。</li>
-            <li>过程中发现客户 ID 断档，见<a href="#n-id">复盘</a>。</li>
-          </ul>
-          <p class="links"><a href="https://github.com/ZIzi821/Ecommerce-BI-Dashboard" target="_blank" rel="noopener">仓库与截图 →</a></p>
-        </div>
-        <figure><img loading="lazy" src="assets/ecom-trend.png" alt="R Shiny 看板的月度趋势页"><figcaption>R Shiny 看板：月度趋势</figcaption></figure>
-      </div>
-    </details>
-  </article>
-
-  <!-- 3 Cairn -->
-  <article class="card project reveal tilt" id="p-cairn">
-    <div class="card-top">
-      <div>
-        <p class="tag">黑客松 · 两人团队 · RAG</p>
-        <h3>Cairn &amp; TraceDesk Lite</h3>
-        <p class="one">面向 ADHD 等注意力、阅读困难的学生的规章问答：只按原文回答，每句附出处，服务器逐字核对引文。LaunchPad Hacks 2026 参赛作品，我负责产品构想、初版 Prompt 和前端设计思路。</p>
-      </div>
-      <div class="chips"><span class="chip">产品构想</span><span class="chip">Prompt</span><span class="chip">检索评测</span><span class="chip">认知无障碍</span></div>
-    </div>
-    <div class="methods" aria-label="七种检索方案的 MRR@10 对比">
-      <p class="methods-title">45 题中英评测集上七种检索方案的 MRR@10</p>
-      <div class="m-row"><span>BM25（关键词）</span><div class="m-bar" data-w="37.5"><em>0.375</em></div></div>
-      <div class="m-row"><span>混合检索 0.4 / 0.6</span><div class="m-bar" data-w="59"><em>0.590</em></div></div>
-      <div class="m-row"><span>RRF 融合</span><div class="m-bar" data-w="70.3"><em>0.703</em></div></div>
-      <div class="m-row"><span>向量</span><div class="m-bar" data-w="70.9"><em>0.709</em></div></div>
-      <div class="m-row"><span>RRF + 重排</span><div class="m-bar" data-w="75.4"><em>0.754</em></div></div>
-      <div class="m-row"><span>向量 + 重排</span><div class="m-bar" data-w="76.2"><em>0.762</em></div></div>
-      <div class="m-row best"><span>翻译 + 向量 + 重排（采用）</span><div class="m-bar" data-w="83.9"><em>0.839</em></div></div>
-    </div>
-    <details class="more">
-      <summary><span>展开：问题、我做的部分、结果</span></summary>
-      <div class="more-grid single">
-        <div>
-          <h4>问题</h4>
-          <p>学生要从很长的英文规章里找截止时间和下一步，容易漏看；通用 AI 摘要又可能编造或改动日期。对 ADHD、阅读困难和英语二语的读者影响最大。</p>
-          <h4>我做的部分</h4>
-          <ul>
-            <li><b>产品构想</b>：先给结论和截止时间，再给下一步；每句附原文出处，没有原文支撑就不回答。落地为学生规章问答 Cairn 和社团帮助台 TraceDesk Lite。</li>
-            <li><b>Prompt</b>：写了初版回答提示词，禁止编造日期、费用和联系方式；配合结构化输出，把引用限定在检索到的段落里。</li>
-            <li><b>前端设计思路</b>：回答固定为“一句话结论 → 可勾选清单 → 原文依据”，日期只在引文核对通过后高亮；专注模式、字号、朗读、减少动效。界面由队友实现。</li>
-            <li><b>检索评测</b>：和队友一起用 45 题中英评测集比较 7 种检索方案。</li>
-          </ul>
-          <h4>结果</h4>
-          <ul>
-            <li>中文提问先译成英文再检索最关键：采用方案 Top-5 命中 44 / 45，MRR@10 0.839（BM25 只有 0.375）。</li>
-            <li>实时测试里 22 / 22 条引文通过服务器核对。</li>
-            <li>还没有做用户测试，不声称已证明对 ADHD 读者有帮助。</li>
-          </ul>
-          <p class="links"><a href="https://jason-d-e.github.io/cairn/" target="_blank" rel="noopener">在线演示 →</a><a href="https://github.com/Jason-d-e/cairn" target="_blank" rel="noopener">Cairn 仓库 →</a><a href="https://github.com/Jason-d-e/tracedesk-lite" target="_blank" rel="noopener">TraceDesk Lite 仓库 →</a></p>
-        </div>
-      </div>
-    </details>
-  </article>
-
-  <!-- 4 Mini program -->
-  <article class="card project reveal tilt" id="p-app">
-    <div class="card-top">
-      <div>
-        <p class="tag">产品 · AI 编程</p>
-        <h3>朱老师英语课堂</h3>
-        <p class="one">给自己一对一英语教学做的微信小程序，持续用于真实教学。课程记录、背词、小测、错题和口语模考原来散在聊天记录和纸上，现在在一个工具里。</p>
-      </div>
-      <div class="chips"><span class="chip">JavaScript</span><span class="chip">微信云开发</span><span class="chip">Codex / Claude Code</span></div>
-    </div>
-    <div class="flow3" aria-label="学生端首页的三步">
-      <div class="step"><span>1</span><b>先背单词</b></div><div class="arrow"></div>
-      <div class="step"><span>2</span><b>个性化小测</b></div><div class="arrow"></div>
-      <div class="step"><span>3</span><b>课后任务</b></div>
-    </div>
-    <div class="kpis">
-      <div class="kpi"><b><span class="count" data-to="40" data-dec="0">40</span> 个页面</b><small>老师 / 学生双角色</small></div>
-      <div class="kpi"><b><span class="count" data-to="22" data-dec="0">22</span> + <span class="count" data-to="12" data-dec="0">12</span></b><small>单元测试文件 + 流程校验脚本，全部通过才上传</small></div>
-      <div class="kpi"><b>12 套</b><small>KET 口语模考</small></div>
-    </div>
-    <details class="more">
-      <summary><span>展开：三个具体问题</span></summary>
-      <div class="more-grid single">
-        <div>
-          <h4>复习怎么安排</h4>
-          <p>按“没记住 / 有点难 / 记住了 / 太简单”和拼写结果更新每个词的记忆状态，用遗忘曲线估计回忆概率，预计降到 90% 时安排复习。每次复习前先记下预测值，再用 Brier Score 检查预测准不准。</p>
-          <h4>读音为什么慢</h4>
-          <p>手机上读音加载慢、偶尔播不出。定位到每次播放都要先加载整段合辑，改成每个单词一个短音频，加上超时重试、合辑回退，并预缓存当天要学的词。</p>
-          <h4>怎么用 AI 写代码</h4>
-          <p>用 Codex 和 Claude Code 开发：先写清需求、约束和验收标准，每个功能配测试。</p>
-          <p class="links"><a href="https://github.com/ZIzi821/Teaching-Students-English-Program" target="_blank" rel="noopener">仓库 →</a><a href="https://github.com/ZIzi821/teachloop-skills" target="_blank" rel="noopener">由它整理出的 AI Skill：teachloop-skills →</a></p>
-        </div>
-      </div>
-    </details>
-  </article>
-
-  <!-- 5 Stats -->
-  <article class="card project reveal tilt" id="p-stats">
-    <div class="card-top">
-      <div>
-        <p class="tag">统计 · A/B 实验</p>
-        <h3>统计建模与 A/B 实验</h3>
-        <p class="one">用 R 做的四个分析：概率建模、假设检验、回归与分类、一次 A/B 实验从设计到结论的完整流程。</p>
-      </div>
-      <div class="chips"><span class="chip">R</span><span class="chip">假设检验</span><span class="chip">SRM</span><span class="chip">CUPED</span></div>
-    </div>
-    <div class="kpis">
-      <div class="kpi"><b><span class="count" data-to="14751" data-dec="0" data-sep="1">14,751</span></b><small>转化率 10% → 11% 时每组需要的样本量</small></div>
-      <div class="kpi"><b>4.3% <i>→</i> <span class="count" data-to="20.1" data-dec="1">20.1</span>%</b><small>每天看一次并提前停止，A/A 假阳性的变化（2,000 次模拟）</small></div>
-      <div class="kpi"><b>Adj. R² <span class="count" data-to="0.87" data-dec="2">0.87</span></b><small>房价多元回归</small></div>
-    </div>
-    <p class="links pad"><a href="https://github.com/ZIzi821/Statistical-Modelling-R" target="_blank" rel="noopener">仓库 →</a></p>
-  </article>
-</section>
-
-<!-- ============ NOTES ============ -->
-<section class="section" id="notes">
-  <div class="section-head reveal">
-    <p class="kicker">02 · 复盘</p>
+<!-- ================= 复盘 ================= -->
+<section class="view" id="notes" data-view="notes" aria-label="复盘" hidden>
+  <div class="prose">
+    <p class="eyebrow">复盘</p>
     <h2>三个做项目时没想到的发现</h2>
-    <p class="section-sub">数字都来自对应仓库里的运行记录。</p>
-  </div>
-  <div class="notes">
-    <article class="card note reveal" id="n-routing">
-      <p class="tag">内容审核 Workflow</p>
+    <p class="muted">数字都来自对应仓库里的运行记录。</p>
+
+    <article>
+      <p class="tagline">内容审核 Workflow</p>
       <h3>准确率上去了，置信度分流却失效了</h3>
-      <p>v1 送人工复核的 10 条里有 9 条确实判错了，低置信度能把错例筛出来。</p>
-      <p>v2 准确率从 80.0% 升到 95.0%，但置信度集中在 0.65–0.95：送人工的 9 条全部判对，4 条错例全都进了自动标注。</p>
-      <div class="mini-compare">
-        <div><b>v1</b><span class="dots" data-total="10" data-hit="9"></span><small>送人工 10 条，9 条确实判错</small></div>
-        <div><b>v2</b><span class="dots" data-total="9" data-hit="0"></span><small>送人工 9 条，0 条判错</small></div>
-      </div>
-      <p class="take">结论：下一步该改的是置信度校准或分流规则，而不是继续调分类提示词。只看准确率会漏掉这个问题。</p>
+      <p>工作流里，置信度低于 0.7 或代码核对失败的评论会转人工复核。v1 送人工的 10 条里有 9 条确实判错了，低置信度能把错例筛出来。</p>
+      <p>v2 只改了提示词，测试集准确率从 80.0% 升到 95.0%，漏判率从 25.0% 降到 5.0%。但置信度集中到了 0.65–0.95：送人工的 9 条全部判对，4 条错例全都进了自动标注。</p>
+      <p class="take">下一步该改的是置信度校准或分流规则，而不是继续调分类提示词。只看准确率会漏掉这个问题。</p>
+      <p><a href="https://github.com/ZIzi821/content-review-workflow" target="_blank" rel="noopener">仓库与完整指标 ↗</a></p>
     </article>
-    <article class="card note reveal" id="n-id" style="--d:.08s">
-      <p class="tag">电商运营分析</p>
+
+    <article>
+      <p class="tagline">电商运营分析</p>
       <h3>新客占比突然变成 100%</h3>
       <p>算复购率之前，先检查了客户 ID 是否连续。结果发现从 2017 年 10 月起，每个月的新客占比都是 100%：订单数等于客户数。</p>
       <p>这不是业务变化，是客户 ID 断档：从那个月开始，每笔订单都被算成了一个新客户。</p>
-      <p class="take">结论：复购分析只用 2015-01 至 2017-09 的数据，否则复购率会被低估。指标算出来之前，先看数据本身对不对。</p>
+      <p class="take">复购分析只用 2015-01 至 2017-09 的数据，否则复购率会被低估。指标算出来之前，先看数据本身对不对。</p>
+      <p><a href="https://github.com/ZIzi821/Ecommerce-BI-Dashboard" target="_blank" rel="noopener">仓库 ↗</a></p>
     </article>
-    <article class="card note reveal" id="n-peek" style="--d:.16s">
-      <p class="tag">A/B 实验</p>
+
+    <article>
+      <p class="tagline">A/B 实验</p>
       <h3>提前偷看，假阳性从 4.3% 到 20.1%</h3>
-      <p>用固定随机种子做了 2,000 次 A/A 测试：两组没有任何差别，理论上显著的比例应该在 5% 左右。</p>
-      <div class="peek">
-        <div class="peek-col"><div class="peek-bar" data-h="21.4"><em>4.3%</em></div><small>实验结束才看一次</small></div>
-        <div class="peek-col"><div class="peek-bar hot" data-h="100"><em>20.1%</em></div><small>每天看一次，显著就停</small></div>
-      </div>
-      <p class="take">结论：样本量和停止规则要在实验前定好。同一个流程里还做了样本量计算、SRM 检查和 CUPED（置信区间宽度缩小 41.8%）。</p>
+      <p>用固定随机种子做了 2,000 次 A/A 测试：两组没有任何差别，显著的比例理论上应该在 5% 左右。实验结束才看一次，假阳性是 4.3%；每天看一次、显著就停，升到 20.1%。</p>
+      <p>同一个流程里还做了样本量计算（转化率 10% → 11% 时每组需要 14,751 人）、SRM 检查，以及 CUPED 方差缩减（置信区间宽度缩小 41.8%）。</p>
+      <p class="take">样本量和停止规则要在实验前定好。</p>
+      <p><a href="https://github.com/ZIzi821/Statistical-Modelling-R" target="_blank" rel="noopener">仓库 ↗</a></p>
     </article>
   </div>
 </section>
 
-<!-- ============ EXPERIENCE ============ -->
-<section class="section" id="experience">
-  <div class="section-head reveal">
-    <p class="kicker">03 · 经历</p>
-    <h2>经历</h2>
-  </div>
-  <div class="timeline">
-    <div class="tl-item reveal">
-      <div class="tl-date">2025.11 – 2026.02</div>
-      <div class="tl-body">
-        <h3>数据实习生 · 淮安市数据集团</h3>
-        <p>围绕共享单车的还车反馈做数据分析和知识支持：用 SQL 和 pandas 统一首次还车成功率等指标口径、维护 Power BI 看板、定位需要优先核查的停车点；为内部 RAG 问答原型整理规则资料、编写 Prompt，并用 240 条样例检查回答。</p>
-      </div>
-    </div>
-    <div class="tl-item reveal">
-      <div class="tl-date">2025.12 – 至今</div>
-      <div class="tl-body">
-        <h3>兼职英语教师 · 一对一辅导</h3>
-        <p>备课、授课、批改作业和课后反馈。教学里遇到的真实需求，变成了上面的小程序和下面的课堂练习站。</p>
-      </div>
-    </div>
-    <div class="tl-item reveal">
-      <div class="tl-date">2026.10 – 至今</div>
-      <div class="tl-body">
-        <h3>新生导师 · 莫纳什大学科学学院</h3>
-      </div>
-    </div>
-    <div class="tl-item reveal">
-      <div class="tl-date">2025 – 2028</div>
-      <div class="tl-body">
-        <h3>莫纳什大学（Monash University）· 应用数据科学学士</h3>
-        <p>统计建模、数据分析（R、Python、可视化）、算法与数据结构（C++）。全英文授课。</p>
-      </div>
-    </div>
-  </div>
-  <div class="skills reveal">
-    <span>SQL</span><span>Python · pandas · scikit-learn</span><span>R · Shiny</span><span>Power BI</span><span>Excel</span><span>Prompt</span><span>RAG</span><span>扣子 Workflow</span><span>Claude Code</span><span>Codex</span><span>JavaScript</span><span>微信小程序</span>
-  </div>
-</section>
+<!-- ================= 关于 ================= -->
+<section class="view" id="about" data-view="about" aria-label="关于" hidden>
+  <div class="prose">
+    <p class="eyebrow">关于</p>
+    <h2>Yanyu Zhu（ZIzi）</h2>
+    <p>莫纳什大学（Monash University）应用数据科学本科在读，2025 – 2028，全英文授课。喜欢把具体需求做成能用的小产品，然后用数据检查它到底有没有用。</p>
 
-<!-- ============ MORE ============ -->
-<section class="section" id="more">
-  <div class="section-head reveal">
-    <p class="kicker">04 · 小作品</p>
-    <h2>顺手做的小东西</h2>
-  </div>
-  <div class="grid3">
-    <a class="card small reveal tilt" href="https://github.com/ZIzi821/teachloop-skills" target="_blank" rel="noopener">
-      <p class="tag">AI Skill</p><h3>teachloop-skills</h3>
-      <p>把小程序里反复用到的教学设计判断整理成 AI Skill：一个入口文件加 5 份参考。用 8 个需求场景和 3 个不该触发的请求做行为评测。</p>
-    </a>
-    <a class="card small reveal tilt" href="https://github.com/ZIzi821/Teaching-Students-English-Classroom-Quiz" target="_blank" rel="noopener" style="--d:.08s">
-      <img loading="lazy" src="assets/quiz.png" alt="英语课堂练习站首页">
-      <p class="tag">教学工具</p><h3>英语课堂练习站</h3>
-      <p>180 个词条、97 道题的离线练习页：自动批改、错题重练、成绩导出。单个 HTML，双击就能用。</p>
-    </a>
-    <a class="card small reveal tilt" href="https://github.com/ZIzi821/Cpp-Data-Structures-Algorithms" target="_blank" rel="noopener" style="--d:.16s">
-      <p class="tag">C++</p><h3>数据结构与算法</h3>
-      <p>手写链表、BST、堆、可扩容哈希表等 14 个任务，用不变量测试和 5,000 次随机对拍验证。</p>
-    </a>
-    <a class="card small reveal tilt" href="https://zizi821.github.io/ZIzi_Game/" target="_blank" rel="noopener" style="--d:.24s">
-      <p class="tag">早期练手 · 三人团队</p><h3>ZIzi Game</h3>
-      <p>4 款网页小游戏和一个带云存档的兵棋沙盒，我负责游戏与前端。排行榜用 Firebase，读取超时回退到 JSON 缓存，缓存由 GitHub Actions 定时导出。</p>
-    </a>
+    <div class="rows">
+      <div class="row"><span>2025.11 – 2026.02</span><div><h3>数据实习生 · 淮安市数据集团</h3><p>围绕共享单车的还车反馈做数据分析和知识支持：用 SQL 和 pandas 统一首次还车成功率等指标口径、维护 Power BI 看板、定位需要优先核查的停车点；为内部 RAG 问答原型整理规则资料、编写 Prompt，并用 240 条样例检查回答。</p></div></div>
+      <div class="row"><span>2025.12 – 至今</span><div><h3>兼职英语教师 · 一对一辅导</h3><p>备课、授课、批改作业和课后反馈。教学里遇到的真实需求，变成了小程序和课堂练习站。</p></div></div>
+      <div class="row"><span>2026.10 – 至今</span><div><h3>新生导师 · 莫纳什大学科学学院</h3></div></div>
+      <div class="row"><span>2025 – 2028</span><div><h3>应用数据科学学士 · 莫纳什大学</h3><p>统计建模、数据分析（R、Python、可视化）、算法与数据结构（C++）。</p></div></div>
+    </div>
+
+    <p class="eyebrow gap">常用工具</p>
+    <div class="tags"><span>SQL</span><span>Python · pandas · scikit-learn</span><span>R · Shiny</span><span>Power BI</span><span>Excel</span><span>Prompt</span><span>RAG</span><span>扣子 Workflow</span><span>Claude Code</span><span>Codex</span><span>JavaScript</span><span>微信小程序</span></div>
+
+    <p class="eyebrow gap">联系</p>
+    <p><a href="https://github.com/ZIzi821" target="_blank" rel="noopener">github.com/ZIzi821 ↗</a></p>
   </div>
 </section>
 
 </main>
 
-<footer class="footer">
-  <p>Yanyu Zhu（ZIzi）· <a href="https://github.com/ZIzi821" target="_blank" rel="noopener">github.com/ZIzi821</a></p>
-  <p class="fine">纯 HTML / CSS / JavaScript，没有用框架和外部资源。页面上的数字都能在对应仓库里找到出处。</p>
+<footer class="foot">
+  <p>纯 HTML / CSS / JavaScript，没有用框架和外部资源。页面上的数字都能在对应仓库里找到出处。</p>
 </footer>
+
+<!-- ================= 底部悬浮导航 ================= -->
+<nav class="dock" aria-label="页面导航">
+  <button type="button" class="is-active" data-tab="works"><i></i>作品</button>
+  <button type="button" data-tab="notes"><i></i>复盘</button>
+  <button type="button" data-tab="about"><i></i>关于</button>
+  <a href="https://github.com/ZIzi821" target="_blank" rel="noopener">GitHub ↗</a>
+</nav>
+
+<!-- ================= 项目详情 ================= -->
+<div class="sheet" id="sheet" hidden>
+  <div class="sheet-bg" data-close></div>
+  <div class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="sheet-title" tabindex="-1">
+    <button type="button" class="sheet-x" data-close aria-label="关闭">×</button>
+    <div id="sheet-body"></div>
+  </div>
+</div>
+
+<template id="d-workflow">
+  <p class="eyebrow">AI 应用 · 评测 · 个人项目</p>
+  <h2 id="sheet-title">内容审核预标注 Workflow</h2>
+  <p class="lead">在扣子上搭的评论审核预标注流程：先检索规则，再让大模型判定，代码节点核对，拿不准的转人工。</p>
+  <div class="facts"><div><b>0.795 → 0.950</b><small>测试集 Macro-F1</small></div><div><b>25.0% → 5.0%</b><small>漏判率</small></div><div><b>11.2%</b><small>人工复核比例</small></div></div>
+  <h4>问题</h4>
+  <p>审核或标注团队想先让模型做一遍预标注：把握大的直接入库，有疑问的交给人。所以要看两件事：分对了多少，以及送人工的那部分是不是真的该给人看。</p>
+  <h4>做法</h4>
+  <ul>
+    <li>流程：知识库检索规则 → 大模型（温度 0）输出类别、规则编号、原文证据和置信度 → Python 代码节点核对规则编号与证据 → 置信度低于 0.7 或核对失败转人工复核。</li>
+    <li>自建 120 条标注样本，4 个类别，开发 40 条、测试 80 条；用批处理工作流批量运行。</li>
+    <li>按类别统计 Precision / Recall / F1、漏判率、误判率和人工复核比例。</li>
+    <li>只看开发集的错例做归因：规则没被检索到、个人贬损和反讽没有覆盖。v2 只改提示词。</li>
+  </ul>
+  <h4>结果</h4>
+  <ul>
+    <li>测试集准确率 80.0% → 95.0%，Macro-F1 0.795 → 0.950；攻击辱骂 20 条里认出的从 9 条到 18 条；误判率保持 0。</li>
+    <li>同时发现 v2 的置信度分流失效了，见“复盘”。</li>
+  </ul>
+  <img loading="lazy" src="assets/workflow-canvas.jpg" alt="扣子画布上的评论审核工作流">
+  <p class="links"><a href="https://github.com/ZIzi821/content-review-workflow" target="_blank" rel="noopener">仓库与完整指标 ↗</a></p>
+</template>
+
+<template id="d-ecom">
+  <p class="eyebrow">数据分析 · SQL · 看板 · 个人项目</p>
+  <h2 id="sheet-title">电商运营分析</h2>
+  <p class="lead">同一份数据做三层：R Shiny 交互看板、10 个 DuckDB SQL 查询、Python 延误预测。三层口径一致，SQL 结果和看板逐项交叉核对。</p>
+  <div class="facts"><div><b>180,519</b><small>条订单明细，聚合为 65,752 笔订单</small></div><div><b>57.3% → 34.3%</b><small>延误率情景测算</small></div><div><b>AUC 0.777</b><small>延误预测</small></div></div>
+  <h4>问题</h4>
+  <p>配送延误率很高。延误来自哪里？下单时能不能预判？</p>
+  <h4>做法</h4>
+  <ul>
+    <li>写了 10 个查询：窗口函数做排名与环比、cohort 留存、RFM 分层；结果和 R Shiny 看板交叉核对。</li>
+    <li>按运输方式拆解延误，再做情景测算。</li>
+    <li>建模只取下单时已知的特征，按时间切分训练集和测试集。</li>
+  </ul>
+  <h4>结果</h4>
+  <ul>
+    <li>延误主要来自承诺时效的设定：First Class 承诺 1 天，实际 2 天。按实际时效设定承诺，全网延误率由 57.3% 降到 34.3%。</li>
+    <li>梯度提升模型 AUC 0.777、延误召回率 0.623，比“按运输方式判断”的规则基线多识别约 8 个百分点的延误订单。</li>
+    <li>检查客户 ID 连续性时发现 ID 断档，复购分析只用断档之前的数据。</li>
+  </ul>
+  <img loading="lazy" src="assets/ecom-trend.png" alt="R Shiny 看板的月度趋势页">
+  <p class="links"><a href="https://github.com/ZIzi821/Ecommerce-BI-Dashboard" target="_blank" rel="noopener">仓库与截图 ↗</a></p>
+</template>
+
+<template id="d-cairn">
+  <p class="eyebrow">LaunchPad Hacks 2026 · 两人团队</p>
+  <h2 id="sheet-title">Cairn &amp; TraceDesk Lite</h2>
+  <p class="lead">面向 ADHD 等注意力、阅读困难的学生的规章问答：只按原文回答，每句附出处，服务器逐字核对引文。我负责产品构想、初版 Prompt 和前端设计思路。</p>
+  <div class="facts"><div><b>44 / 45</b><small>Top-5 命中</small></div><div><b>0.839</b><small>MRR@10（BM25 为 0.375）</small></div><div><b>22 / 22</b><small>实时测试中通过核对的引文</small></div></div>
+  <h4>问题</h4>
+  <p>学生要从很长的英文规章里找截止时间和下一步，容易漏看；通用 AI 摘要又可能编造或改动日期。对 ADHD、阅读困难和英语二语的读者影响最大。</p>
+  <h4>我做的部分</h4>
+  <ul>
+    <li><strong>产品构想</strong>：先给结论和截止时间，再给下一步；每句附原文出处，没有原文支撑就不回答。落地为学生规章问答 Cairn 和社团帮助台 TraceDesk Lite。</li>
+    <li><strong>Prompt</strong>：写了初版回答提示词，禁止编造日期、费用和联系方式；配合结构化输出，把引用限定在检索到的段落里。</li>
+    <li><strong>前端设计思路</strong>：回答固定为“一句话结论 → 可勾选清单 → 原文依据”，日期只在引文核对通过后高亮；专注模式、字号、朗读、减少动效。界面由队友实现。</li>
+    <li><strong>检索评测</strong>：和队友一起用 45 题中英评测集比较 7 种检索方案，发现中文提问先译成英文再检索最关键。</li>
+  </ul>
+  <p class="links"><a href="https://jason-d-e.github.io/cairn/" target="_blank" rel="noopener">在线演示 ↗</a><a href="https://github.com/Jason-d-e/cairn" target="_blank" rel="noopener">Cairn 仓库 ↗</a><a href="https://github.com/Jason-d-e/tracedesk-lite" target="_blank" rel="noopener">TraceDesk Lite 仓库 ↗</a></p>
+</template>
+
+<template id="d-app">
+  <p class="eyebrow">产品 · AI 编程 · 个人项目</p>
+  <h2 id="sheet-title">朱老师英语课堂</h2>
+  <p class="lead">给自己一对一英语教学做的微信小程序，持续用于真实教学。课程记录、背词、小测、错题和口语模考原来散在聊天记录和纸上，现在在一个工具里。</p>
+  <div class="facts"><div><b>40</b><small>个页面，老师 / 学生双角色</small></div><div><b>22 + 12</b><small>单元测试文件 + 流程校验脚本</small></div><div><b>12</b><small>套 KET 口语模考</small></div></div>
+  <h4>复习怎么安排</h4>
+  <p>按“没记住 / 有点难 / 记住了 / 太简单”和拼写结果更新每个词的记忆状态，用遗忘曲线估计回忆概率，预计降到 90% 时安排复习。每次复习前先记下预测值，再用 Brier Score 检查预测准不准。</p>
+  <h4>读音为什么慢</h4>
+  <p>手机上读音加载慢、偶尔播不出。定位到每次播放都要先加载整段合辑，改成每个单词一个短音频，加上超时重试、合辑回退，并预缓存当天要学的词。</p>
+  <h4>怎么用 AI 写代码</h4>
+  <p>用 Codex 和 Claude Code 开发：先写清需求、约束和验收标准，每个功能配测试；22 个单元测试文件和 12 个校验脚本全部通过才上传。</p>
+  <p class="links"><a href="https://github.com/ZIzi821/Teaching-Students-English-Program" target="_blank" rel="noopener">仓库 ↗</a><a href="https://github.com/ZIzi821/teachloop-skills" target="_blank" rel="noopener">由它整理出的 AI Skill ↗</a></p>
+</template>
+
+<template id="d-stats">
+  <p class="eyebrow">统计 · A/B 实验 · 个人项目</p>
+  <h2 id="sheet-title">统计建模与 A/B 实验</h2>
+  <p class="lead">用 R 做的四个分析：概率建模、假设检验、回归与分类、一次 A/B 实验从设计到结论的完整流程。</p>
+  <div class="facts"><div><b>14,751</b><small>转化率 10% → 11% 时每组需要的样本量</small></div><div><b>4.3% → 20.1%</b><small>提前偷看时 A/A 假阳性的变化</small></div><div><b>Adj. R² 0.87</b><small>房价多元回归</small></div></div>
+  <h4>做了什么</h4>
+  <ul>
+    <li>A/B 实验：样本量计算、SRM 检查、两比例 z 检验与置信区间、CUPED 方差缩减（置信区间宽度缩小 41.8%）、2,000 次 A/A 模拟。</li>
+    <li>预测建模：房价多元回归 Adj. R² 0.87；酒店预订取消预测里，Logistic 回归准确率 0.768、灵敏度 0.581，都高于十折交叉验证剪枝的决策树（0.736 / 0.516）。</li>
+  </ul>
+  <img class="onwhite" loading="lazy" src="assets/ab-peeking.png" alt="A/A 测试中提前偷看导致的假阳性率">
+  <p class="links"><a href="https://github.com/ZIzi821/Statistical-Modelling-R" target="_blank" rel="noopener">仓库 ↗</a></p>
+</template>
 
 <script src="main.js"></script>
 </body>
