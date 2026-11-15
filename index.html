@@ -11,11 +11,13 @@
 </head>
 <body>
 
+<a class="corner" href="https://github.com/ZIzi821" target="_blank" rel="noopener">GITHUB <span>↗</span></a>
+
 <main>
 
 <!-- ================= 首屏 ================= -->
 <header class="hero">
-  <canvas id="field" aria-hidden="true"></canvas>
+  <canvas id="sky" aria-hidden="true"></canvas>
   <div class="hero-text">
     <h1 class="rise">Yanyu Zhu</h1>
     <p class="role rise" style="--d:.08s">ZIZI · 应用数据科学 · MONASH UNIVERSITY</p>
@@ -26,26 +28,62 @@
     </div>
     <p class="avail rise" style="--d:.32s"><i></i>2026 年 11 月底起可实习</p>
   </div>
+  <nav class="index rise" style="--d:.4s" aria-label="项目列表">
+    <p>项目</p>
+    <button type="button" data-open="d-workflow">内容审核 Workflow</button>
+    <button type="button" data-open="d-ecom">电商运营分析</button>
+    <button type="button" data-open="d-cairn">Cairn &amp; TraceDesk Lite</button>
+    <button type="button" data-open="d-app">朱老师英语课堂</button>
+    <button type="button" data-open="d-stats">统计建模与 A/B</button>
+  </nav>
 </header>
 
 <!-- ================= 作品 ================= -->
 <section class="view is-active" id="works" data-view="works" aria-label="作品">
   <ul class="mosaic">
 
-    <li class="tile project" data-open="d-workflow" tabindex="0" role="button" aria-label="内容审核预标注 Workflow，查看详情">
-      <div class="viz pad">
-        <div class="pipe">
-          <span>检索规则</span><i></i><span>大模型判定</span><i></i><span>代码核对</span><i></i><span class="two"><em class="w">人工复核</em><em class="o">自动标注</em></span>
-        </div>
-        <div class="vs">
-          <div><label>Macro-F1</label><b class="bar a" data-w="79.5"><u>v1 0.795</u></b><b class="bar b" data-w="95"><u>v2 0.950</u></b></div>
-          <div><label>漏判率</label><b class="bar a" data-w="25"><u>v1 25.0%</u></b><b class="bar b" data-w="5"><u>v2 5.0%</u></b></div>
-        </div>
-      </div>
+    <li class="tile live tall" data-cover="workflow" data-open="d-workflow" tabindex="0" role="button" aria-label="内容审核预标注 Workflow，查看详情">
+      <div class="cover"></div>
       <div class="cap"><span class="name">内容审核预标注 Workflow</span><span class="kind">AI 应用 · 评测</span></div>
     </li>
 
-    <li class="tile note light">
+    <li class="tile live wide" data-cover="sql" data-open="d-ecom" tabindex="0" role="button" aria-label="电商运营分析的 SQL，查看详情">
+      <div class="cover"></div>
+      <div class="cap"><span class="name">电商运营分析 · SQL</span><span class="kind">DuckDB · 10 个查询</span></div>
+    </li>
+
+    <li class="tile live tall" data-cover="cairn" data-open="d-cairn" tabindex="0" role="button" aria-label="Cairn 与 TraceDesk Lite，查看详情">
+      <div class="cover"></div>
+      <div class="cap"><span class="name">Cairn &amp; TraceDesk Lite</span><span class="kind">黑客松 · RAG</span></div>
+    </li>
+
+    <li class="tile live shot" data-cover="shot" data-open="d-ecom" tabindex="0" role="button" aria-label="R Shiny 看板，查看详情">
+      <div class="cover"><img loading="lazy" src="assets/ecom-trend.png" alt="R Shiny 看板的月度趋势页"></div>
+      <div class="cap"><span class="name">电商运营分析 · 看板</span><span class="kind">R Shiny</span></div>
+    </li>
+
+    <li class="tile quote" id="quote" hidden>
+      <span class="qm" aria-hidden="true">❞</span>
+      <p class="q" data-quote-text></p>
+      <p class="who"><b data-quote-name></b><span data-quote-role></span></p>
+    </li>
+
+    <li class="tile live wide" data-cover="ab" data-open="d-stats" tabindex="0" role="button" aria-label="A/B 实验的偷看模拟，查看详情">
+      <div class="cover"></div>
+      <div class="cap"><span class="name">A/B 实验：提前偷看</span><span class="kind">实时模拟</span></div>
+    </li>
+
+    <li class="tile live tall" data-cover="app" data-open="d-app" tabindex="0" role="button" aria-label="朱老师英语课堂，查看详情">
+      <div class="cover"></div>
+      <div class="cap"><span class="name">朱老师英语课堂</span><span class="kind">微信小程序 · AI 编程</span></div>
+    </li>
+
+    <li class="tile live short" data-cover="metrics" data-open="d-workflow" tabindex="0" role="button" aria-label="Prompt v1 与 v2 的指标对比，查看详情">
+      <div class="cover"></div>
+      <div class="cap"><span class="name">Prompt v1 → v2</span><span class="kind">测试集 80 条</span></div>
+    </li>
+
+    <li class="tile note">
       <span class="mark">发现</span>
       <p class="q">准确率从 80.0% 升到 95.0%，置信度分流却失效了：送人工的 9 条全部判对，4 条错例全都进了自动标注。</p>
       <div class="dotrow"><span class="dots" data-total="10" data-hit="9"></span><small>v1 送人工 10 条，9 条确实判错</small></div>
@@ -53,28 +91,35 @@
       <p class="src">内容审核 Workflow · <a href="#notes" data-tab="notes">看复盘</a></p>
     </li>
 
-    <li class="tile img" data-open="d-ecom" tabindex="0" role="button" aria-label="电商运营分析，查看详情">
-      <img loading="lazy" src="assets/ecom-trend.png" alt="R Shiny 看板的月度趋势页">
-      <div class="cap"><span class="name">电商运营分析</span><span class="kind">SQL · 看板 · 预测</span></div>
+    <li class="tile live wide" data-cover="race" data-open="d-cairn" tabindex="0" role="button" aria-label="七种检索方案的对比，查看详情">
+      <div class="cover"></div>
+      <div class="cap"><span class="name">七种检索方案</span><span class="kind">45 题中英评测集</span></div>
     </li>
 
-    <li class="tile img" data-open="d-workflow" tabindex="0" role="button" aria-label="扣子画布上的工作流，查看详情">
-      <img loading="lazy" src="assets/workflow-canvas.jpg" alt="扣子画布上的评论审核工作流">
-      <div class="cap"><span class="name">扣子画布</span><span class="kind">内容审核 Workflow</span></div>
+    <li class="tile live square" data-cover="skill" data-href="https://github.com/ZIzi821/teachloop-skills" tabindex="0" role="link" aria-label="teachloop-skills 仓库">
+      <div class="cover"></div>
+      <div class="cap"><span class="name">teachloop-skills</span><span class="kind">AI Skill ↗</span></div>
     </li>
 
-    <li class="tile project" data-open="d-cairn" tabindex="0" role="button" aria-label="Cairn 与 TraceDesk Lite，查看详情">
-      <div class="viz pad">
-        <p class="vt">45 题中英评测集 · 七种检索方案的 MRR@10</p>
-        <div class="mm"><label>BM25</label><b class="bar a" data-w="37.5"><u>0.375</u></b></div>
-        <div class="mm"><label>混合检索</label><b class="bar a" data-w="59"><u>0.590</u></b></div>
-        <div class="mm"><label>RRF 融合</label><b class="bar a" data-w="70.3"><u>0.703</u></b></div>
-        <div class="mm"><label>向量</label><b class="bar a" data-w="70.9"><u>0.709</u></b></div>
-        <div class="mm"><label>RRF + 重排</label><b class="bar a" data-w="75.4"><u>0.754</u></b></div>
-        <div class="mm"><label>向量 + 重排</label><b class="bar a" data-w="76.2"><u>0.762</u></b></div>
-        <div class="mm best"><label>翻译 + 向量 + 重排</label><b class="bar b" data-w="83.9"><u>0.839</u></b></div>
-      </div>
-      <div class="cap"><span class="name">Cairn &amp; TraceDesk Lite</span><span class="kind">黑客松 · RAG</span></div>
+    <li class="tile live shot light" data-cover="shot" data-open="d-ecom" tabindex="0" role="button" aria-label="cohort 留存，查看详情">
+      <div class="cover"><img loading="lazy" src="assets/ecom-cohort.png" alt="看板中的 cohort 留存页"></div>
+      <div class="cap"><span class="name">cohort 留存</span><span class="kind">电商运营分析</span></div>
+    </li>
+
+    <li class="tile note beam">
+      <span class="mark">发现</span>
+      <p class="q">从 2017 年 10 月起，每个月的新客占比都是 100%。不是业务变化，是客户 ID 断档：每笔订单都被算成了一个新客户。</p>
+      <p class="src">电商运营分析 · <a href="#notes" data-tab="notes">看复盘</a></p>
+    </li>
+
+    <li class="tile live square" data-cover="bst" data-href="https://github.com/ZIzi821/Cpp-Data-Structures-Algorithms" tabindex="0" role="link" aria-label="C++ 数据结构与算法仓库">
+      <div class="cover"></div>
+      <div class="cap"><span class="name">C++ 数据结构与算法</span><span class="kind">14 个任务 ↗</span></div>
+    </li>
+
+    <li class="tile live shot light pan" data-cover="shot" data-href="https://github.com/ZIzi821/Teaching-Students-English-Classroom-Quiz" tabindex="0" role="link" aria-label="英语课堂练习站仓库">
+      <div class="cover"><img loading="lazy" src="assets/quiz.png" alt="英语课堂练习站首页"></div>
+      <div class="cap"><span class="name">英语课堂练习站</span><span class="kind">离线练习页 ↗</span></div>
     </li>
 
     <li class="tile stat">
@@ -83,92 +128,14 @@
       <p class="src">电商运营分析</p>
     </li>
 
-    <li class="tile img light-img" data-open="d-ecom" tabindex="0" role="button" aria-label="cohort 留存热力图，查看详情">
-      <img loading="lazy" src="assets/ecom-cohort.png" alt="看板中的 cohort 留存页">
-      <div class="cap"><span class="name">cohort 留存</span><span class="kind">电商运营分析</span></div>
-    </li>
-
-    <li class="tile project" data-open="d-app" tabindex="0" role="button" aria-label="朱老师英语课堂，查看详情">
-      <div class="viz pad">
-        <div class="steps"><span><b>1</b>先背单词</span><i></i><span><b>2</b>个性化小测</span><i></i><span><b>3</b>课后任务</span></div>
-        <div class="trio">
-          <div><strong><span class="count" data-to="40" data-dec="0">40</span></strong><small>个页面<br>老师 / 学生双角色</small></div>
-          <div><strong><span class="count" data-to="22" data-dec="0">22</span>+<span class="count" data-to="12" data-dec="0">12</span></strong><small>测试文件 + 校验脚本<br>全部通过才上传</small></div>
-          <div><strong>12</strong><small>套 KET<br>口语模考</small></div>
-        </div>
-      </div>
-      <div class="cap"><span class="name">朱老师英语课堂</span><span class="kind">微信小程序 · AI 编程</span></div>
-    </li>
-
-    <li class="tile note">
-      <span class="mark">发现</span>
-      <p class="q">从 2017 年 10 月起，每个月的新客占比都是 100%。不是业务变化，是客户 ID 断档：每笔订单都被算成了一个新客户。</p>
-      <p class="src">电商运营分析 · <a href="#notes" data-tab="notes">看复盘</a></p>
-    </li>
-
-    <li class="tile img white" data-open="d-stats" tabindex="0" role="button" aria-label="A/B 实验中提前偷看的假阳性，查看详情">
-      <img loading="lazy" src="assets/ab-peeking.png" alt="A/A 测试中提前偷看导致的假阳性率">
-      <div class="cap"><span class="name">统计建模与 A/B 实验</span><span class="kind">R</span></div>
-    </li>
-
-    <li class="tile stat">
-      <p class="big"><span class="count" data-to="44" data-dec="0">44</span><em>/45</em></p>
-      <p class="sub">Cairn 采用的检索方案在 45 题中英评测集上的 Top-5 命中。实时测试里 22 / 22 条引文通过服务器逐字核对。</p>
-      <p class="src">Cairn &amp; TraceDesk Lite</p>
-    </li>
-
-    <li class="tile img" data-open="d-ecom" tabindex="0" role="button" aria-label="延误预测的特征重要性，查看详情">
-      <img loading="lazy" src="assets/ecom-model.png" alt="延误预测模型的特征重要性">
-      <div class="cap"><span class="name">延误预测</span><span class="kind">AUC 0.777</span></div>
-    </li>
-
-    <li class="tile note">
-      <span class="mark">发现</span>
-      <p class="q">两组没有任何差别的 A/A 测试，每天看一次、显著就停，假阳性从 4.3% 升到 20.1%。</p>
-      <div class="peek"><div><b data-h="21.4"><u>4.3%</u></b><small>结束才看</small></div><div><b class="hot" data-h="100"><u>20.1%</u></b><small>每天偷看</small></div></div>
-      <p class="src">A/B 实验 · 2,000 次模拟 · <a href="#notes" data-tab="notes">看复盘</a></p>
-    </li>
-
-    <li class="tile small" data-href="https://github.com/ZIzi821/teachloop-skills" tabindex="0" role="link">
-      <span class="mark">AI SKILL</span>
-      <h3>teachloop-skills</h3>
-      <p>把小程序里反复用到的教学设计判断整理成 AI Skill：一个入口文件加 5 份参考，用 8 个需求场景和 3 个不该触发的请求做行为评测。</p>
-      <span class="go">仓库 ↗</span>
-    </li>
-
-    <li class="tile img" data-open="d-workflow" tabindex="0" role="button" aria-label="批量评测工作流，查看详情">
-      <img loading="lazy" src="assets/workflow-eval.jpg" alt="批量评测工作流的试运行">
-      <div class="cap"><span class="name">批量评测工作流</span><span class="kind">120 条标注样本</span></div>
-    </li>
-
-    <li class="tile img white" data-href="https://github.com/ZIzi821/Teaching-Students-English-Classroom-Quiz" tabindex="0" role="link">
-      <img loading="lazy" src="assets/quiz.png" alt="英语课堂练习站首页">
-      <div class="cap"><span class="name">英语课堂练习站</span><span class="kind">离线练习页 ↗</span></div>
-    </li>
-
-    <li class="tile note light">
-      <span class="mark">一个修复</span>
-      <p class="q">手机上读音加载慢、偶尔播不出。原因是每次播放都要先加载整段合辑；改成每个单词一个短音频，加上超时重试、合辑回退和当日待学词预缓存。</p>
-      <p class="src">朱老师英语课堂</p>
-    </li>
-
-    <li class="tile small" data-href="https://github.com/ZIzi821/Cpp-Data-Structures-Algorithms" tabindex="0" role="link">
-      <span class="mark">C++</span>
-      <h3>数据结构与算法</h3>
-      <p>手写链表、BST、堆、可扩容哈希表等 14 个任务，用不变量测试和 5,000 次随机对拍验证。</p>
-      <span class="go">仓库 ↗</span>
-    </li>
-
-    <li class="tile img light-img" data-open="d-ecom" tabindex="0" role="button" aria-label="运输方式与延误的热力图，查看详情">
-      <img loading="lazy" src="assets/ecom-heatmap.png" alt="运输方式与延误的热力图">
+    <li class="tile live shot light" data-cover="shot" data-open="d-ecom" tabindex="0" role="button" aria-label="运输方式与延误，查看详情">
+      <div class="cover"><img loading="lazy" src="assets/ecom-heatmap.png" alt="运输方式与延误的热力图"></div>
       <div class="cap"><span class="name">运输方式 × 延误</span><span class="kind">电商运营分析</span></div>
     </li>
 
-    <li class="tile small" data-href="https://zizi821.github.io/ZIzi_Game/" tabindex="0" role="link">
-      <span class="mark">早期练手 · 三人团队</span>
-      <h3>ZIzi Game</h3>
-      <p>4 款网页小游戏和一个带云存档的兵棋沙盒，我负责游戏与前端。排行榜用 Firebase，读取超时回退到 JSON 缓存，缓存由 GitHub Actions 定时导出。</p>
-      <span class="go">在线试玩 ↗</span>
+    <li class="tile live short" data-cover="game" data-href="https://zizi821.github.io/ZIzi_Game/" tabindex="0" role="link" aria-label="ZIzi Game 在线试玩">
+      <div class="cover"></div>
+      <div class="cap"><span class="name">ZIzi Game</span><span class="kind">早期练手 · 在线试玩 ↗</span></div>
     </li>
 
   </ul>
@@ -235,7 +202,7 @@
 </main>
 
 <footer class="foot">
-  <p>纯 HTML / CSS / JavaScript，没有用框架和外部资源。页面上的数字都能在对应仓库里找到出处。</p>
+  <p>纯 HTML / CSS / JavaScript，没有用框架和外部资源。封面里的评论、单词是示例；指标数字都能在对应仓库里找到出处。</p>
 </footer>
 
 <!-- ================= 底部悬浮导航 ================= -->
@@ -298,6 +265,7 @@
     <li>检查客户 ID 连续性时发现 ID 断档，复购分析只用断档之前的数据。</li>
   </ul>
   <img loading="lazy" src="assets/ecom-trend.png" alt="R Shiny 看板的月度趋势页">
+  <img loading="lazy" src="assets/ecom-model.png" alt="延误预测模型的特征重要性">
   <p class="links"><a href="https://github.com/ZIzi821/Ecommerce-BI-Dashboard" target="_blank" rel="noopener">仓库与截图 ↗</a></p>
 </template>
 
@@ -341,11 +309,13 @@
   <ul>
     <li>A/B 实验：样本量计算、SRM 检查、两比例 z 检验与置信区间、CUPED 方差缩减（置信区间宽度缩小 41.8%）、2,000 次 A/A 模拟。</li>
     <li>预测建模：房价多元回归 Adj. R² 0.87；酒店预订取消预测里，Logistic 回归准确率 0.768、灵敏度 0.581，都高于十折交叉验证剪枝的决策树（0.736 / 0.516）。</li>
+    <li>封面上的动画是在你的浏览器里实时重跑的简化版 A/A 模拟，数字每次都不一样；仓库里 2,000 次的结果是 4.3% 和 20.1%。</li>
   </ul>
   <img class="onwhite" loading="lazy" src="assets/ab-peeking.png" alt="A/A 测试中提前偷看导致的假阳性率">
   <p class="links"><a href="https://github.com/ZIzi821/Statistical-Modelling-R" target="_blank" rel="noopener">仓库 ↗</a></p>
 </template>
 
 <script src="main.js"></script>
+<script src="covers.js"></script>
 </body>
 </html>

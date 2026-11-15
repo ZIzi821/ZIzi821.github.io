@@ -1,84 +1,150 @@
-/* Yanyu Zhu (ZIzi) portfolio — plain JavaScript, no dependencies */
+/* Yanyu Zhu (ZIzi) portfolio — core: hero sky, tiles, tabs, detail sheet. Plain JavaScript, no dependencies. */
 (function () {
   'use strict';
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var $ = function (s, el) { return (el || document).querySelector(s); };
   var $$ = function (s, el) { return Array.prototype.slice.call((el || document).querySelectorAll(s)); };
+  window.ZZ = { reduce: reduce, $: $, $$: $$ };
 
-  /* ---------- hero: dot-matrix terrain drawn on a canvas ---------- */
-  var canvas = $('#field');
+  /* A real quote goes here once someone has actually written one. While `text` is empty the card stays hidden. */
+  var QUOTE = { text: '', name: '', role: '' };
+
+  /* ================= hero: stars, a dot-matrix planet and an orbit ================= */
+  var canvas = $('#sky');
   if (canvas && canvas.getContext) {
-    var ctx = canvas.getContext('2d'), W = 0, H = 0, raf = null, visible = true, t = 0;
-    var COLS = 96, ROWS = 46;
+    var ctx = canvas.getContext('2d'), W = 0, H = 0, dpr = 1, stars = [], t0 = performance.now(), last = 0, raf = null, visible = true;
+    var Lx = -0.56, Ly = -0.36, Lz = 0.75;                       // light from the upper left
     function resize() {
-      var r = canvas.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var r = canvas.getBoundingClientRect();
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
       W = r.width; H = r.height;
       canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      stars = [];
+      var n = Math.round(W * H / 9000);
+      for (var i = 0; i < n; i++) stars.push({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 0.9 + 0.3, p: Math.random() * 6.28, s: 0.4 + Math.random() * 1.2 });
     }
-    function height(x, z, time) {
-      return Math.sin(x * 0.42 + time * 0.9) * 0.55
-           + Math.sin(z * 0.55 - time * 0.6) * 0.45
-           + Math.sin((x + z) * 0.23 + time * 0.4) * 0.6
-           + Math.cos(Math.sqrt(x * x + z * z) * 0.5 - time * 1.1) * 0.5;
+    function surface(x, y, z) {                                  // procedural terrain on the unit sphere, 0..1
+      var v = 0.5
+        + 0.26 * Math.sin(4.1 * x + 1.7 * Math.sin(3.1 * y + 0.6))
+        + 0.17 * Math.sin(6.7 * y + 2.2 * z + 1.1)
+        + 0.12 * Math.sin(11.3 * z + 4.9 * x)
+        + 0.07 * Math.sin(21.0 * x * y + 8.7 * z);
+      return v < 0 ? 0 : v > 1 ? 1 : v;
     }
-    function frame() {
+    function draw(now) {
+      var time = (now - t0) / 1000;
+      var intro = Math.min(1, time / 1.8), ease = 1 - Math.pow(1 - intro, 3);
       ctx.clearRect(0, 0, W, H);
-      var cx = W / 2, horizon = H * 0.10, focal = H * 1.15, camY = 3.4;
-      for (var j = ROWS - 1; j >= 0; j--) {
-        var z = 2.2 + j * 0.42;
-        for (var i = 0; i < COLS; i++) {
-          var x = (i - (COLS - 1) / 2) * 0.36;
-          var h = height(x, z, t);
-          var sx = cx + (x / z) * focal;
-          var sy = horizon + ((camY - h * 0.85) / z) * focal * 0.55;
-          if (sx < -4 || sx > W + 4 || sy < -4 || sy > H + 4) continue;
-          var near = 1 - j / ROWS;
-          var lift = (h + 2.1) / 4.2;
-          var size = (0.8 + near * 2.2) * (0.6 + lift * 0.9);
-          var alpha = Math.max(0, Math.min(1, (0.10 + lift * lift * 1.2) * (0.5 + near * 0.7)));
-          var c = Math.round(150 + lift * 80);
-          ctx.fillStyle = 'rgba(' + (c - 26) + ',' + (c - 6) + ',' + Math.min(255, c + 22) + ',' + alpha.toFixed(3) + ')';
-          ctx.fillRect(sx - size / 2, sy - size / 2, size, size);
+
+      // stars
+      for (var i = 0; i < stars.length; i++) {
+        var s = stars[i];
+        ctx.globalAlpha = (0.18 + 0.5 * (0.5 + 0.5 * Math.sin(time * s.s + s.p))) * ease;
+        ctx.fillStyle = '#cfdcf2';
+        ctx.fillRect(s.x, s.y, s.r, s.r);
+      }
+
+      var R = Math.min(340, W * 0.36, H * 0.60) * (0.95 + 0.05 * ease);
+      var cx = W / 2, cy = H * 0.07 + R;
+      var a = time * 0.07, ca = Math.cos(a), sa = Math.sin(a);
+
+      // orbit (behind the planet first)
+      var orx = R * 1.72, ory = R * 0.46, tilt = -0.30, ct = Math.cos(tilt), st = Math.sin(tilt), ocy = cy - R * 0.08;
+      function orbitPoint(th) {
+        var ex = Math.cos(th) * orx, ey = Math.sin(th) * ory;
+        return [cx + ex * ct - ey * st, ocy + ex * st + ey * ct, Math.sin(th) < 0];   // third value: on the far side
+      }
+      function hidden(p) { var dx = p[0] - cx, dy = p[1] - cy; return p[2] && dx * dx + dy * dy < R * R; }
+      ctx.lineWidth = 1;
+      for (var k = 0; k < 220; k++) {
+        if (k % 2) continue;
+        var p1 = orbitPoint(k / 220 * 6.2832), p2 = orbitPoint((k + 0.9) / 220 * 6.2832);
+        if (hidden(p1)) continue;
+        ctx.globalAlpha = (p1[2] ? 0.16 : 0.34) * ease;
+        ctx.strokeStyle = '#a9c2e6';
+        ctx.beginPath(); ctx.moveTo(p1[0], p1[1]); ctx.lineTo(p2[0], p2[1]); ctx.stroke();
+      }
+
+      // planet: one square per grid cell, sized by how much light it gets
+      var step = W < 640 ? 3.6 : 4.2, y0 = Math.max(0, cy - R), y1 = Math.min(H, cy + R);
+      for (var py = y0; py <= y1; py += step) {
+        var ny = (py - cy) / R, half = Math.sqrt(1 - ny * ny) * R;
+        var iy = Math.round(py / step);
+        for (var px = cx - half; px <= cx + half; px += step) {
+          var nx = (px - cx) / R, nz2 = 1 - nx * nx - ny * ny;
+          if (nz2 <= 0) continue;
+          var nz = Math.sqrt(nz2);
+          var light = nx * Lx + ny * Ly + nz * Lz;
+          var ix = Math.round(px / step);
+          if (light <= 0.02) {                                   // night side: a sparse dither so the limb still reads
+            if ((ix + iy * 3) % 7 === 0 && nz < 0.55) { ctx.globalAlpha = 0.20 * ease; ctx.fillStyle = '#8fa9cf'; ctx.fillRect(px, py, 1, 1); }
+            continue;
+          }
+          var rx = nx * ca + nz * sa, rz = -nx * sa + nz * ca;   // spin around the vertical axis
+          var v = surface(rx, ny, rz);
+          var b = light * (0.30 + 0.80 * v) + 0.22 * Math.pow(1 - nz, 3);
+          if (b < 0.16 && (ix + iy) % 2) continue;               // dither the terminator
+          if (b > 1) b = 1;
+          var size = step * (0.22 + 0.70 * b);
+          ctx.globalAlpha = (0.30 + 0.70 * b) * ease;
+          ctx.fillStyle = v < 0.40 ? '#6f8fbd' : '#bfd3f1';
+          ctx.fillRect(px - size / 2, py - size / 2, size, size);
         }
       }
+      // thin limb on the dark side
+      ctx.globalAlpha = 0.30 * ease; ctx.strokeStyle = '#9db6da'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.arc(cx, cy, R, -1.15, 0.75); ctx.stroke();
+
+      // a dark rise in front of the planet, so its lower half sinks into the page
+      ctx.save();
+      ctx.globalAlpha = 1;
+      ctx.translate(cx, cy + R * 1.0); ctx.scale(1.6, 1.12);
+      var hill = ctx.createRadialGradient(0, 0, R * 0.62, 0, 0, R);
+      hill.addColorStop(0, 'rgba(11,11,11,1)'); hill.addColorStop(0.35, 'rgba(11,11,11,.9)'); hill.addColorStop(1, 'rgba(11,11,11,0)');
+      ctx.fillStyle = hill; ctx.beginPath(); ctx.arc(0, 0, R, 0, 6.2832); ctx.fill();
+      ctx.restore();
+
+      // satellite with a short trail
+      var th = time * 0.32 + 0.8;
+      for (var j = 0; j < 26; j++) {
+        var q = orbitPoint(th - j * 0.022);
+        if (hidden(q)) continue;
+        ctx.globalAlpha = (1 - j / 26) * 0.9 * ease;
+        ctx.fillStyle = '#eaf2ff';
+        var sz = j === 0 ? 4 : 1.6;
+        ctx.fillRect(q[0] - sz / 2, q[1] - sz / 2, sz, sz);
+      }
+      ctx.globalAlpha = 1;
     }
-    function loop() {
+    function loop(now) {
       if (!visible) { raf = null; return; }
-      t += 0.012;
-      frame();
+      if (now - last > 30) { last = now; draw(now); }
       raf = requestAnimationFrame(loop);
     }
     resize();
-    window.addEventListener('resize', function () { resize(); if (reduce) frame(); });
-    if (reduce) { t = 1.2; frame(); }
+    window.addEventListener('resize', function () { resize(); if (reduce) draw(t0 + 5000); });
+    if (reduce) draw(t0 + 5000);
     else {
       if ('IntersectionObserver' in window) {
-        new IntersectionObserver(function (en) {
-          visible = en[0].isIntersecting;
-          if (visible && !raf) raf = requestAnimationFrame(loop);
-        }).observe(canvas);
+        new IntersectionObserver(function (en) { visible = en[0].isIntersecting; if (visible && !raf) raf = requestAnimationFrame(loop); }).observe(canvas);
       }
       raf = requestAnimationFrame(loop);
     }
   }
 
-  /* ---------- counters ---------- */
-  function fmt(v, dec) { return v.toFixed(dec); }
+  /* ================= counters and dots ================= */
   function runCount(el) {
     var to = parseFloat(el.getAttribute('data-to')), dec = parseInt(el.getAttribute('data-dec') || '0', 10);
-    if (reduce) { el.textContent = fmt(to, dec); return; }
-    var t0 = null, dur = 1300;
-    (function step(now) {
-      if (now === undefined) { requestAnimationFrame(step); return; }
-      if (t0 === null) t0 = now;
-      var p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 3);
-      el.textContent = fmt(to * e, dec);
-      if (p < 1) requestAnimationFrame(step); else el.textContent = fmt(to, dec);
-    })();
+    if (reduce) { el.textContent = to.toFixed(dec); return; }
+    var start = null;
+    requestAnimationFrame(function step(now) {
+      if (start === null) start = now;
+      var p = Math.min(1, (now - start) / 1300), e = 1 - Math.pow(1 - p, 3);
+      el.textContent = (to * e).toFixed(dec);
+      if (p < 1) requestAnimationFrame(step); else el.textContent = to.toFixed(dec);
+    });
   }
-
-  /* ---------- dots in the routing note ---------- */
   $$('.dots').forEach(function (d) {
     var total = parseInt(d.getAttribute('data-total'), 10), hit = parseInt(d.getAttribute('data-hit'), 10);
     for (var i = 0; i < total; i++) {
@@ -89,47 +155,46 @@
     }
   });
 
-  /* ---------- tiles: reveal on scroll, then start their own little animations ---------- */
+  /* ================= quote card ================= */
+  var quote = $('#quote');
+  if (quote && QUOTE.text) {
+    $('[data-quote-text]', quote).textContent = QUOTE.text;
+    $('[data-quote-name]', quote).textContent = QUOTE.name;
+    $('[data-quote-role]', quote).textContent = QUOTE.role;
+    quote.hidden = false;
+  } else if (quote) { quote.parentNode.removeChild(quote); }
+
+  /* ================= tiles: reveal on scroll ================= */
+  var tiles = $$('.tile');
   function activate(tile) {
     if (tile._on) return; tile._on = true;
     tile.classList.add('in');
     $$('.count', tile).forEach(runCount);
-    $$('.bar', tile).forEach(function (b, i) {
-      if (parseFloat(b.getAttribute('data-w')) < 30) b.classList.add('out');
-      setTimeout(function () { b.style.width = b.getAttribute('data-w') + '%'; }, reduce ? 0 : 250 + i * 80);
-    });
-    $$('.peek b', tile).forEach(function (b, i) {
-      setTimeout(function () { b.style.height = b.getAttribute('data-h') + '%'; }, reduce ? 0 : 300 + i * 200);
-    });
   }
-  var tiles = $$('.tile');
   if ('IntersectionObserver' in window && !reduce) {
     var io = new IntersectionObserver(function (entries) {
       var n = 0;
       entries.forEach(function (en) {
         if (!en.isIntersecting) return;
         var el = en.target;
-        setTimeout(function () { activate(el); }, n * 70);
+        setTimeout(function () { activate(el); }, n * 80);
         n++;
         io.unobserve(el);
       });
-    }, { threshold: 0.08, rootMargin: '0px 0px -4% 0px' });
+    }, { threshold: 0.06, rootMargin: '0px 0px -4% 0px' });
     tiles.forEach(function (el) { io.observe(el); });
-  } else {
-    tiles.forEach(activate);
-  }
+  } else { tiles.forEach(activate); }
 
-  /* ---------- views (dock tabs) ---------- */
+  /* ================= views (dock tabs) ================= */
   var views = $$('.view'), tabs = $$('.dock [data-tab]');
   function show(name, scroll) {
     var found = false;
+    views.forEach(function (v) { if (v.getAttribute('data-view') === name) found = true; });
+    if (!found) return;
     views.forEach(function (v) {
       var on = v.getAttribute('data-view') === name;
-      if (on) found = true;
-      v.hidden = !on;
-      v.classList.toggle('is-active', on);
+      v.hidden = !on; v.classList.toggle('is-active', on);
     });
-    if (!found) return;
     tabs.forEach(function (b) { b.classList.toggle('is-active', b.getAttribute('data-tab') === name); });
     if (scroll) {
       var top = $('.view.is-active').getBoundingClientRect().top + window.scrollY - 24;
@@ -140,45 +205,33 @@
   document.addEventListener('click', function (e) {
     var el = e.target.closest ? e.target.closest('[data-tab]') : null;
     if (!el) return;
-    e.preventDefault();
-    closeSheet();
-    show(el.getAttribute('data-tab'), true);
+    e.preventDefault(); closeSheet(); show(el.getAttribute('data-tab'), true);
   });
-  var start = (location.hash || '').replace('#', '');
-  if (start === 'notes' || start === 'about') show(start, false);
+  var startView = (location.hash || '').replace('#', '');
+  if (startView === 'notes' || startView === 'about') show(startView, false);
 
-  /* ---------- project detail sheet ---------- */
+  /* ================= project detail sheet ================= */
   var sheet = $('#sheet'), body = $('#sheet-body'), panel = $('.sheet-panel'), lastFocus = null;
   function openSheet(id) {
     var tpl = document.getElementById(id);
     if (!tpl) return;
-    body.innerHTML = '';
-    body.appendChild(tpl.content.cloneNode(true));
+    body.innerHTML = ''; body.appendChild(tpl.content.cloneNode(true));
     lastFocus = document.activeElement;
-    sheet.hidden = false;
-    document.body.classList.add('locked');
-    panel.scrollTop = 0;
-    panel.focus();
+    sheet.hidden = false; document.body.classList.add('locked');
+    panel.scrollTop = 0; panel.focus();
   }
   function closeSheet() {
-    if (sheet.hidden) return;
-    sheet.hidden = true;
-    document.body.classList.remove('locked');
+    if (!sheet || sheet.hidden) return;
+    sheet.hidden = true; document.body.classList.remove('locked');
     if (lastFocus && lastFocus.focus) lastFocus.focus();
   }
-  function tileAction(tile) {
-    var open = tile.getAttribute('data-open'), href = tile.getAttribute('data-href');
-    if (open) openSheet(open);
-    else if (href) window.open(href, '_blank', 'noopener');
+  function act(el) {
+    var open = el.getAttribute('data-open'), href = el.getAttribute('data-href');
+    if (open) openSheet(open); else if (href) window.open(href, '_blank', 'noopener');
   }
-  $$('.tile[data-open], .tile[data-href]').forEach(function (tile) {
-    tile.addEventListener('click', function (e) {
-      if (e.target.closest && e.target.closest('a')) return;
-      tileAction(tile);
-    });
-    tile.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tileAction(tile); }
-    });
+  $$('[data-open], [data-href]').forEach(function (el) {
+    el.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('a')) return; act(el); });
+    if (el.tagName !== 'BUTTON') el.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); act(el); } });
   });
   sheet.addEventListener('click', function (e) { if (e.target.hasAttribute && e.target.hasAttribute('data-close')) closeSheet(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSheet(); });
