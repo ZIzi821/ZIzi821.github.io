@@ -264,7 +264,7 @@
 
   /* ---------- 8. teachloop-skills: eight behaviour scenarios, three requests that must not trigger ---------- */
   scenes.skill = async function (el, st) {
-    var a = ['首页加统计卡', '新学生没有观察数据', '提交后被重复催交', '成人学员自己确认学完', 'AI 录音分析', '教师预览', '错题与板书分流', '刷选择题后延长复习'];
+    var a = ['首页加统计卡', '新学生没有观察数据', '提交后被重复催交', '学员自己确认学完', 'AI 录音分析', '教师预览', '错题与板书分流', '刷选择题后延长复习'];
     var b = ['排版作业 PDF', '查询微信 API', '修改简历'];
     el.innerHTML = '<div class="s-sk"><p class="lbl">8 个行为场景</p><ul class="sk-a">' + a.map(function (x) { return '<li><b></b>' + x + '</li>'; }).join('') +
       '</ul><p class="lbl">3 个不该触发的请求</p><ul class="sk-b">' + b.map(function (x) { return '<li><b></b>' + x + '</li>'; }).join('') + '</ul></div>';
