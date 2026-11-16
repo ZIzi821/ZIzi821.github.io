@@ -190,12 +190,17 @@ h1 { font-size: 27px; font-weight: 600; letter-spacing: -.01em; color: var(--fg)
 .rt-two { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .rt-ph { position: relative; display: flex; flex-direction: column; gap: 4px; padding: 14px 12px 11px; border-radius: 14px; border: 1px solid var(--line2); background: rgba(0,0,0,.4); transition: border-color .35s; }
 .rt-ph::before { content: ""; position: absolute; top: 6px; left: 50%; width: 26px; height: 3px; border-radius: 2px; background: rgba(255,255,255,.12); transform: translateX(-50%); }
-.rt-t { margin-top: auto; font-family: var(--mono); font-size: 26px; font-weight: 600; line-height: 1.15; color: var(--fg); letter-spacing: -.01em; transition: color .35s; }
+.rt-t { font-family: var(--mono); font-size: 26px; font-weight: 600; line-height: 1.15; color: var(--fg); letter-spacing: -.01em; transition: color .35s; }
 .rt-t s { display: block; font-size: 12px; font-weight: 400; color: var(--dim); text-decoration-thickness: 1.5px; }
 .rt-n { min-height: 1.6em; font-size: 11.5px; color: var(--mute); transition: color .35s; }
-.rt-road { display: block; height: 4px; margin-top: 2px; border-radius: 2px; background: rgba(255,255,255,.08); overflow: hidden; }
-.rt-road b { display: block; width: 0; height: 100%; background: var(--hot); transition-property: width; transition-timing-function: linear; }
-.rt-ph.on .rt-road b { background: var(--ice); }
+.rt-map { flex: 1 1 auto; min-height: 0; width: 100%; margin: 4px 0 2px; overflow: visible; }
+.rt-map path { fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.rt-map .bg { stroke: rgba(255,255,255,.1); }
+.rt-map .go { stroke: var(--hot); stroke-dasharray: 100; stroke-dashoffset: 100; }
+.rt-map rect { fill: none; stroke: var(--mute); stroke-width: 1.4; } .rt-map .home { fill: none; stroke: var(--mute); stroke-width: 1.4; }
+.rt-map .rider { fill: var(--fg); }
+.rt-ph.on .rt-map .go { stroke: var(--ice); }
+.rt-ph.hot .rt-map .rider { fill: var(--hot); } .rt-ph.ok .rt-map .rider { fill: var(--ice); }
 .rt-ph.hot { border-color: rgba(240,163,107,.55); } .rt-ph.hot .rt-t, .rt-ph.hot .rt-n { color: var(--hot); }
 .rt-ph.ok { border-color: rgba(201,216,238,.5); } .rt-ph.ok .rt-t { color: var(--ice); } .rt-ph.ok .rt-n { color: var(--ok); }
 .rt-code { font-family: var(--mono); font-size: 11px; color: var(--mute); white-space: nowrap; overflow: hidden; }

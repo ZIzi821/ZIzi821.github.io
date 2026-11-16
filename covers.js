@@ -375,16 +375,31 @@
 
   /* ---------- 11. RTPL: the same order on two phones, without and with the time check (synthetic order from the demo) ---------- */
   scenes.rtpl = async function (el, st) {
+    var ROUTE = 'M8 48 H30 V22 H58 V36 H92 V10';                 // restaurant (bottom left) to customer (top right), a made-up street grid
+    var map = '<svg class="rt-map" viewBox="0 0 100 58" preserveAspectRatio="xMidYMid meet"><path class="bg" d="' + ROUTE + '"/>' +
+      '<path class="go" pathLength="100" d="' + ROUTE + '"/><rect x="4" y="44" width="8" height="8" rx="2"/><circle class="home" cx="92" cy="10" r="4"/><circle class="rider" r="3" cx="8" cy="48"/></svg>';
     el.innerHTML = '<div class="s-rt"><p class="rt-ai"><span class="lbl">AI 调度</span><b></b></p><div class="rt-two">' +
-      '<div class="rt-ph off"><span class="lbl">没有 RTPL</span><p class="rt-t">—</p><p class="rt-n"></p><i class="rt-road"><b></b></i></div>' +
-      '<div class="rt-ph on"><span class="lbl">有 RTPL</span><p class="rt-t">—</p><p class="rt-n"></p><i class="rt-road"><b></b></i></div>' +
+      '<div class="rt-ph off"><span class="lbl">没有 RTPL</span>' + map + '<p class="rt-t">—</p><p class="rt-n"></p></div>' +
+      '<div class="rt-ph on"><span class="lbl">有 RTPL</span>' + map + '<p class="rt-t">—</p><p class="rt-n"></p></div>' +
       '</div><p class="rt-code">deadline = MAX(<span class="a">ai</span>, <span class="f">legal_floor</span>)<span class="res"></span></p></div>';
     var ai = $('.rt-ai b', el), off = $('.rt-ph.off', el), on = $('.rt-ph.on', el), code = $('.rt-code', el),
         cA = $('.a', code), cF = $('.f', code), res = $('.res', code);
-    var tOff = $('.rt-t', off), nOff = $('.rt-n', off), rOff = $('.rt-road b', off),
-        tOn = $('.rt-t', on), nOn = $('.rt-n', on), rOn = $('.rt-road b', on);
+    var tOff = $('.rt-t', off), nOff = $('.rt-n', off), rOff = $('.rt-map', off),
+        tOn = $('.rt-t', on), nOn = $('.rt-n', on), rOn = $('.rt-map', on);
     var say = '建议 12:24 送达，这段路实际要 34 分钟';
-    function road(b, pct, ms) { b.style.transitionDuration = ms + 'ms'; b.style.width = pct + '%'; }
+    function road(svg, pct, ms) {                                 // move the rider along the route to pct% in ms
+      var go = $('.go', svg), dot = $('.rider', svg), len = $('.bg', svg).getTotalLength(), from = svg._p || 0, t0 = null;
+      svg._run = (svg._run || 0) + 1; var id = svg._run;
+      function put(p) { var pt = $('.bg', svg).getPointAtLength(len * p / 100); dot.setAttribute('cx', pt.x); dot.setAttribute('cy', pt.y); go.style.strokeDashoffset = 100 - p; svg._p = p; }
+      if (!ms) { put(pct); return; }
+      requestAnimationFrame(function step(now) {
+        if (id !== svg._run) return;
+        if (t0 === null) t0 = now;
+        var k = Math.min(1, (now - t0) / ms);
+        put(from + (pct - from) * k);
+        if (k < 1) requestAnimationFrame(step);
+      });
+    }
     function done() {
       off.className = 'rt-ph off hot'; tOff.textContent = '12:24'; nOff.textContent = '要骑 120 km/h';
       on.className = 'rt-ph on ok'; tOn.innerHTML = '<s>12:24</s>12:34'; nOn.textContent = '✓ 顾客端同步 12:34';
