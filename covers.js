@@ -373,6 +373,47 @@
     window.addEventListener('resize', function () { g = null; });
   };
 
+  /* ---------- 11. RTPL: the same order on two phones, without and with the time check (synthetic order from the demo) ---------- */
+  scenes.rtpl = async function (el, st) {
+    el.innerHTML = '<div class="s-rt"><p class="rt-ai"><span class="lbl">AI 调度</span><b></b></p><div class="rt-two">' +
+      '<div class="rt-ph off"><span class="lbl">没有 RTPL</span><p class="rt-t">—</p><p class="rt-n"></p><i class="rt-road"><b></b></i></div>' +
+      '<div class="rt-ph on"><span class="lbl">有 RTPL</span><p class="rt-t">—</p><p class="rt-n"></p><i class="rt-road"><b></b></i></div>' +
+      '</div><p class="rt-code">deadline = MAX(<span class="a">ai</span>, <span class="f">legal_floor</span>)<span class="res"></span></p></div>';
+    var ai = $('.rt-ai b', el), off = $('.rt-ph.off', el), on = $('.rt-ph.on', el), code = $('.rt-code', el),
+        cA = $('.a', code), cF = $('.f', code), res = $('.res', code);
+    var tOff = $('.rt-t', off), nOff = $('.rt-n', off), rOff = $('.rt-road b', off),
+        tOn = $('.rt-t', on), nOn = $('.rt-n', on), rOn = $('.rt-road b', on);
+    var say = '建议 12:24 送达，这段路实际要 34 分钟';
+    function road(b, pct, ms) { b.style.transitionDuration = ms + 'ms'; b.style.width = pct + '%'; }
+    function done() {
+      off.className = 'rt-ph off hot'; tOff.textContent = '12:24'; nOff.textContent = '要骑 120 km/h';
+      on.className = 'rt-ph on ok'; tOn.innerHTML = '<s>12:24</s>12:34'; nOn.textContent = '✓ 顾客端同步 12:34';
+      res.textContent = ' = 12:34';
+    }
+    if (reduce) { ai.textContent = say; done(); road(rOff, 100, 0); road(rOn, 100, 0); return; }
+    for (;;) {
+      await st.wait();
+      off.className = 'rt-ph off'; on.className = 'rt-ph on';
+      tOff.textContent = '—'; tOn.textContent = '—'; nOff.textContent = ''; nOn.textContent = ''; res.textContent = '';
+      cA.className = 'a'; cF.className = 'f'; road(rOff, 0, 0); road(rOn, 0, 0);
+      ai.textContent = '';
+      await st.pause(400);
+      await type(ai, say, 45, st);
+      await st.pause(450);
+      tOff.textContent = '12:24'; tOn.textContent = '12:24'; nOn.textContent = '核验中…';
+      await st.pause(700);
+      road(rOff, 100, 1500);                                       // the rider without protection has to race
+      for (var v = 0; v <= 120; v += 8) { nOff.textContent = '要骑 ' + v + ' km/h'; await sleep(95); }
+      off.className = 'rt-ph off hot';
+      await st.pause(500);
+      cA.className = 'a hl'; await st.pause(650); cA.className = 'a'; cF.className = 'f hl'; await st.pause(650); cF.className = 'f';
+      res.textContent = ' = 12:34';
+      tOn.innerHTML = '<s>12:24</s>12:34'; on.className = 'rt-ph on ok'; nOn.textContent = '✓ 顾客端同步 12:34';
+      road(rOn, 100, 3400);
+      await st.pause(4200);
+    }
+  };
+
   /* ---------- screenshots: the motion is CSS only ---------- */
   scenes.shot = function () {};
 

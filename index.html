@@ -7,7 +7,7 @@
 <meta name="description" content="Yanyu Zhu（ZIzi）的作品集：AI 应用的 Prompt、RAG、工作流与评测，以及用 SQL、Python、R 做的数据分析项目。">
 <meta name="theme-color" content="#0b0b0b">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0b0b'/%3E%3Cpath d='M19 20h26L19 44h26' fill='none' stroke='%23d6e2f5' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="style.css?v=20261116d">
+<link rel="stylesheet" href="style.css?v=20261117a">
 </head>
 <body>
 
@@ -34,6 +34,7 @@
     <button type="button" data-open="d-cairn">Cairn &amp; TraceDesk Lite</button>
     <button type="button" data-open="d-app">朱老师英语课堂</button>
     <button type="button" data-open="d-stats">统计建模与 A/B</button>
+    <button type="button" data-open="d-rtpl">RTPL 原型</button>
   </nav>
 </header>
 
@@ -51,7 +52,7 @@
       <div class="cap"><span class="name">电商运营分析 · SQL</span><span class="kind">DuckDB · 10 个查询</span></div>
     </li>
 
-    <li class="tile live tall" data-cover="cairn" data-open="d-cairn" tabindex="0" role="button" aria-label="Cairn 与 TraceDesk Lite，查看详情">
+    <li class="tile live tall fit" data-cover="cairn" data-open="d-cairn" tabindex="0" role="button" aria-label="Cairn 与 TraceDesk Lite，查看详情">
       <div class="cover"></div>
       <div class="cap"><span class="name">Cairn &amp; TraceDesk Lite</span><span class="kind">黑客松 · RAG</span></div>
     </li>
@@ -77,7 +78,7 @@
       <div class="cap"><span class="name">朱老师英语课堂</span><span class="kind">微信小程序 · AI 编程</span></div>
     </li>
 
-    <li class="tile live short" data-cover="metrics" data-open="d-workflow" tabindex="0" role="button" aria-label="Prompt v1 与 v2 的指标对比，查看详情">
+    <li class="tile live short fit" data-cover="metrics" data-open="d-workflow" tabindex="0" role="button" aria-label="Prompt v1 与 v2 的指标对比，查看详情">
       <div class="cover"></div>
       <div class="cap"><span class="name">Prompt v1 → v2</span><span class="kind">测试集 80 条</span></div>
     </li>
@@ -90,7 +91,7 @@
       <p class="src">内容审核 Workflow · <a href="#notes" data-tab="notes">看复盘</a></p>
     </li>
 
-    <li class="tile live wide" data-cover="race" data-open="d-cairn" tabindex="0" role="button" aria-label="七种检索方案的对比，查看详情">
+    <li class="tile live wide fit" data-cover="race" data-open="d-cairn" tabindex="0" role="button" aria-label="七种检索方案的对比，查看详情">
       <div class="cover"></div>
       <div class="cap"><span class="name">七种检索方案</span><span class="kind">45 题中英评测集</span></div>
     </li>
@@ -114,6 +115,11 @@
     <li class="tile live square" data-cover="bst" data-href="https://github.com/ZIzi821/Cpp-Data-Structures-Algorithms" tabindex="0" role="link" aria-label="C++ 数据结构与算法仓库">
       <div class="cover"></div>
       <div class="cap"><span class="name">C++ 数据结构与算法</span><span class="kind">14 个任务 ↗</span></div>
+    </li>
+
+    <li class="tile live wide fit" data-cover="rtpl" data-open="d-rtpl" tabindex="0" role="button" aria-label="RTPL 骑手配送时限保护原型，查看详情">
+      <div class="cover"></div>
+      <div class="cap"><span class="name">RTPL 骑手配送时限保护</span><span class="kind">课程团队项目 · 原型</span></div>
     </li>
 
     <li class="tile live shot light pan" data-cover="shot" data-href="https://github.com/ZIzi821/Teaching-Students-English-Classroom-Quiz" tabindex="0" role="link" aria-label="英语课堂练习站仓库">
@@ -314,7 +320,24 @@
   <p class="links"><a href="https://github.com/ZIzi821/Statistical-Modelling-R" target="_blank" rel="noopener">仓库 ↗</a></p>
 </template>
 
+<template id="d-rtpl">
+  <p class="eyebrow">课程团队项目 · FIT1055 · 2026.10</p>
+  <h2 id="sheet-title">RTPL 骑手配送时限保护原型</h2>
+  <p class="lead">团队提出 RTPL（骑手配送时限保护）方案：AI 调度给出的送达时间先经过安全时限校验，再给骑手和顾客看；延误要有证据才算到骑手头上；有争议可以申请人工复核，并留下审计记录。我负责汇报网站和手机端交互原型。</p>
+  <div class="facts"><div><b>23 / 28</b><small>仓库提交中我的提交</small></div><div><b>12:24 → 12:34</b><small>AI 建议的时间与校验后的时间（模拟订单）</small></div><div><b>2</b><small>部手机对比同一笔订单</small></div></div>
+  <h4>我做的部分</h4>
+  <ul>
+    <li><strong>汇报网站</strong>：做成“舞台式”汇报：开场影片、团队登场、演讲者交接卡片、配乐和时间轴；PPT 页面和现场演示放在同一个网页里，按讲稿顺序一步步播放。</li>
+    <li><strong>手机端原型</strong>：展示同一笔订单在没有 / 有 RTPL 时的两种体验，含低保真线框图和高保真界面。</li>
+  </ul>
+  <h4>封面上的例子</h4>
+  <p>AI 调度建议 12:24 送达，但这段路实际要 34 分钟，按 12:24 送到要骑 120 km/h。RTPL 在 AI 建议的时间和按最短合规用时（34 分钟）算出的时间里取较晚的一个，骑手和顾客看到的都是 12:34。</p>
+  <h4>说明</h4>
+  <p>订单、路线、城市和 AI 建议都是模拟数据。保护规则不是我写的。</p>
+  <p class="links"><a href="https://jason-d-e.github.io/rtpl-fit1055/" target="_blank" rel="noopener">在线演示 ↗</a><a href="https://jason-d-e.github.io/rtpl-fit1055/phone.html" target="_blank" rel="noopener">手机原型 ↗</a><a href="https://github.com/Jason-d-e/rtpl-fit1055" target="_blank" rel="noopener">仓库 ↗</a></p>
+</template>
+
 <script src="main.js?v=20261116c"></script>
-<script src="covers.js?v=20261116b"></script>
+<script src="covers.js?v=20261117a"></script>
 </body>
 </html>
