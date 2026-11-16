@@ -20,11 +20,13 @@
     var ctx = canvas.getContext('2d'), W = 0, H = 0, dpr = 1, stars = [], t0 = performance.now(), last = 0, raf = null, visible = true;
     var Lx = -0.56, Ly = -0.36, Lz = 0.75;                       // light from the upper left
     function resize() {
-      var r = canvas.getBoundingClientRect();
+      var r = canvas.getBoundingClientRect(), oldW = W;
       dpr = Math.min(window.devicePixelRatio || 1, 2);
       W = r.width; H = r.height;
       canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      // phones fire resize when the address bar slides in and out; keep the same stars unless the width really changed
+      if (stars.length && Math.abs(W - oldW) < 2) return;
       stars = [];
       var n = Math.round(W * H / 9000);
       for (var i = 0; i < n; i++) stars.push({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 0.9 + 0.3, p: Math.random() * 6.28, s: 0.4 + Math.random() * 1.2 });
@@ -217,20 +219,25 @@
   if (startView === 'notes' || startView === 'about') show(startView, false);
 
   /* ================= project detail sheet ================= */
-  var sheet = $('#sheet'), body = $('#sheet-body'), panel = $('.sheet-panel'), lastFocus = null;
+  /* An open sheet owns one history entry, so the phone's back gesture closes the sheet instead of leaving the site. */
+  var sheet = $('#sheet'), body = $('#sheet-body'), lastFocus = null, canPush = !!(history.pushState && history.replaceState);
+  if (canPush && history.state && history.state.sheet) history.replaceState(null, '');   // a reload while a sheet was open
   function openSheet(id) {
     var tpl = document.getElementById(id);
     if (!tpl) return;
     body.innerHTML = ''; body.appendChild(tpl.content.cloneNode(true));
-    lastFocus = document.activeElement;
+    if (sheet.hidden) lastFocus = document.activeElement;
+    if (canPush) { if (history.state && history.state.sheet) history.replaceState({ sheet: id }, ''); else history.pushState({ sheet: id }, ''); }
     sheet.hidden = false; document.body.classList.add('locked');
-    panel.scrollTop = 0; panel.focus();
+    body.scrollTop = 0; body.focus();
   }
-  function closeSheet() {
+  function closeSheet(fromHistory) {
     if (!sheet || sheet.hidden) return;
     sheet.hidden = true; document.body.classList.remove('locked');
     if (lastFocus && lastFocus.focus) lastFocus.focus();
+    if (fromHistory !== true && canPush && history.state && history.state.sheet) history.back();
   }
+  window.addEventListener('popstate', function () { closeSheet(true); });
   function act(el) {
     var open = el.getAttribute('data-open'), href = el.getAttribute('data-href');
     if (open) openSheet(open); else if (href) window.open(href, '_blank', 'noopener');

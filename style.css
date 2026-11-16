@@ -228,7 +228,7 @@ h1 { font-size: 27px; font-weight: 600; letter-spacing: -.01em; color: var(--fg)
 .tags { display: flex; flex-wrap: wrap; gap: 8px; }
 .tags span { padding: 6px 12px; border: 1px solid var(--line2); border-radius: 999px; font-size: 13px; color: var(--fg2); transition: border-color .2s, color .2s, transform .2s; }
 .tags span:hover { border-color: var(--ice2); color: var(--ice); transform: translateY(-2px); }
-.foot { text-align: center; color: var(--dim); font-size: 12px; padding: 0 24px 120px; }
+.foot { text-align: center; color: var(--mute); font-size: 12px; padding: 0 24px 120px; }
 
 /* ================= dock ================= */
 .dock { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 40; display: flex; align-items: center; gap: 2px; padding: 5px; border-radius: 999px; border: 1px solid var(--line2);
@@ -242,9 +242,12 @@ h1 { font-size: 27px; font-weight: 600; letter-spacing: -.01em; color: var(--fg)
 /* ================= detail sheet ================= */
 .sheet { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: 24px; } .sheet[hidden] { display: none; }
 .sheet-bg { position: absolute; inset: 0; background: rgba(0,0,0,.72); backdrop-filter: blur(6px); animation: fade .3s ease both; } @keyframes fade { from { opacity: 0; } }
-.sheet-panel { position: relative; width: min(760px, 100%); max-height: min(86vh, 900px); overflow: auto; background: #111; border: 1px solid var(--line2); border-radius: 20px; padding: 34px 36px 30px; box-shadow: 0 40px 120px rgba(0,0,0,.8); animation: pop .45s cubic-bezier(.2,.8,.2,1) both; }
+/* the panel itself does not scroll: the close button sits in its own row and the text scrolls underneath it, never behind it */
+.sheet-panel { position: relative; display: flex; flex-direction: column; width: min(760px, 100%); max-height: min(86vh, 900px); overflow: hidden; background: #111; border: 1px solid var(--line2); border-radius: 20px; box-shadow: 0 40px 120px rgba(0,0,0,.8); animation: pop .45s cubic-bezier(.2,.8,.2,1) both; }
+#sheet-body { flex: 1 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain; padding: 0 36px 30px; }
+#sheet-body:focus { outline: none; }
 @keyframes pop { from { opacity: 0; transform: translateY(26px) scale(.97); } }
-.sheet-x { position: sticky; top: 0; float: right; margin: -14px -16px 0 0; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line2); background: #1a1a1a; font-size: 18px; line-height: 1; color: var(--fg2); }
+.sheet-x { flex: none; align-self: flex-end; margin: 14px 14px 0 0; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line2); background: #1a1a1a; font-size: 18px; line-height: 1; color: var(--fg2); }
 .sheet-x:hover { background: #262626; color: var(--fg); }
 .sheet h2 { font-size: 24px; font-weight: 600; color: var(--fg); margin-top: 8px; letter-spacing: -.01em; }
 .lead { margin-top: 12px; color: var(--fg2); }
@@ -260,12 +263,26 @@ body.locked { overflow: hidden; }
 
 /* ================= responsive ================= */
 @media (max-width: 1080px) { .mosaic { columns: 2; } }
+/* covers whose content is a fixed stack of rows: never shorter than the rows, however narrow the column gets */
+.tile[data-cover="race"] .cover { min-height: 252px; }
+.tile[data-cover="metrics"] .cover { min-height: 172px; }
+.tile[data-cover="cairn"] .cover { min-height: 430px; }
+/* no hover on touch screens and phones: the caption sits under the cover instead of on top of it */
+@media (hover: none), (max-width: 680px) {
+  .cap { position: relative; opacity: 1; transform: none; background: none; padding: 11px 16px 12px; border-top: 1px solid var(--line); }
+}
 @media (max-width: 680px) {
   .mosaic { columns: 1; } .hero { padding-top: 300px; } #sky { height: 400px; } h1 { font-size: 23px; }
   .row { grid-template-columns: 1fr; gap: 4px; } .facts { grid-template-columns: 1fr; }
-  .sheet { padding: 10px; } .sheet-panel { padding: 26px 20px 22px; border-radius: 16px; }
+  .sheet { padding: 10px; } .sheet-panel { border-radius: 16px; } #sheet-body { padding: 0 20px 22px; } .sheet-x { margin: 10px 10px 0 0; }
   .dock button, .dock a { padding: 8px 11px; font-size: 13.5px; }
-  .cap { opacity: 1; transform: none; } .sql-code { font-size: 8px; } .corner { display: none; }
+  .sql-code { font-size: 8px; } .corner { display: none; }
+  .rc-row { grid-template-columns: 124px 1fr 40px; gap: 8px; }
+}
+/* the bio is three hard lines; on a phone the first (longest, 24 characters) line must still fit on one row */
+@media (max-width: 520px) {
+  .hero { padding-left: 16px; padding-right: 16px; }
+  .bio { font-size: min(15.5px, calc((100vw - 32px) / 24.6)); }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
