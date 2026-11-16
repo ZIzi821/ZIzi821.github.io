@@ -263,10 +263,14 @@ body.locked { overflow: hidden; }
 
 /* ================= responsive ================= */
 @media (max-width: 1080px) { .mosaic { columns: 2; } }
-/* covers whose content is a fixed stack of rows: never shorter than the rows, however narrow the column gets */
-.tile[data-cover="race"] .cover { min-height: 252px; }
-.tile[data-cover="metrics"] .cover { min-height: 172px; }
-.tile[data-cover="cairn"] .cover { min-height: 430px; }
+/* covers whose content is a fixed stack of rows: never shorter than the rows, however narrow the column gets.
+   The ratio comes from padding rather than aspect-ratio, because a min-height on an aspect-ratio box also widens it. */
+.tile[data-cover="race"] .cover, .tile[data-cover="metrics"] .cover, .tile[data-cover="cairn"] .cover { aspect-ratio: auto; }
+.tile[data-cover="race"] .cover, .tile[data-cover="metrics"] .cover, .tile[data-cover="cairn"] .cover { min-height: var(--min); }
+.tile[data-cover="race"] .cover::before, .tile[data-cover="metrics"] .cover::before, .tile[data-cover="cairn"] .cover::before { content: ""; display: block; padding-top: var(--ratio); }
+.tile[data-cover="race"] { --ratio: 65.625%; --min: 252px; }
+.tile[data-cover="metrics"] { --ratio: 46.875%; --min: 172px; }
+.tile[data-cover="cairn"] { --ratio: 125%; --min: 430px; }
 /* no hover on touch screens and phones: the caption sits under the cover instead of on top of it */
 @media (hover: none), (max-width: 680px) {
   .cap { position: relative; opacity: 1; transform: none; background: none; padding: 11px 16px 12px; border-top: 1px solid var(--line); }
