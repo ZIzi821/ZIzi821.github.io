@@ -7,7 +7,7 @@
 <meta name="description" content="Yanyu Zhu（ZIzi）的作品集：AI 应用的 Prompt、RAG、工作流与评测，以及用 SQL、Python、R 做的数据分析项目。">
 <meta name="theme-color" content="#0b0b0b">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0b0b'/%3E%3Cpath d='M19 20h26L19 44h26' fill='none' stroke='%23d6e2f5' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="style.css?v=20261117c">
+<link rel="stylesheet" href="style.css?v=20261117d">
 </head>
 <body>
 
@@ -246,7 +246,8 @@
     <li>测试集准确率 80.0% → 95.0%，Macro-F1 0.795 → 0.950；攻击辱骂 20 条里认出的从 9 条到 18 条；误判率保持 0。</li>
     <li>同时发现 v2 的置信度分流失效了，见“复盘”。</li>
   </ul>
-  <img loading="lazy" src="assets/workflow-canvas.jpg" alt="扣子画布上的评论审核工作流">
+  <figure><img loading="lazy" src="assets/workflow-trial.webp" alt="扣子画布上的工作流试运行，右侧是一条评论的输出"><figcaption>扣子画布：一条评论跑完整个流程，右侧是输出的类别、证据、置信度和分流结果</figcaption></figure>
+  <figure><img loading="lazy" src="assets/workflow-rules.webp" alt="知识库里的 8 条审核规则"><figcaption>知识库：8 条审核规则，每条都有定义、包括和不包括</figcaption></figure>
   <p class="links"><a href="https://github.com/ZIzi821/content-review-workflow" target="_blank" rel="noopener">仓库与完整指标 ↗</a></p>
 </template>
 
@@ -288,7 +289,8 @@
     <li><strong>前端设计思路</strong>：回答固定为“一句话结论 → 可勾选清单 → 原文依据”，日期只在引文核对通过后高亮；专注模式、字号、朗读、减少动效。界面由队友实现。</li>
     <li><strong>检索评测</strong>：和队友一起用 45 题中英评测集比较 7 种检索方案，发现中文提问先译成英文再检索最关键。</li>
   </ul>
-  <p class="links"><a href="https://jason-d-e.github.io/cairn/" target="_blank" rel="noopener">在线演示 ↗</a><a href="https://github.com/Jason-d-e/cairn" target="_blank" rel="noopener">Cairn 仓库 ↗</a><a href="https://github.com/Jason-d-e/tracedesk-lite" target="_blank" rel="noopener">TraceDesk Lite 仓库 ↗</a></p>
+  <figure><img loading="lazy" src="assets/cairn-answer.webp" alt="Cairn 的回答卡片：先给一句话结论，下面是规章原文"><figcaption>回答先给一句话结论，下面附规章原文（截自队伍的演示视频）</figcaption></figure>
+  <figure><img loading="lazy" src="assets/cairn-poster.webp" alt="Cairn 的封面海报"><figcaption>Cairn 的封面（队伍 README 里的海报）</figcaption></figure>
 </template>
 
 <template id="d-app">
@@ -334,7 +336,8 @@
   <p>AI 调度建议 12:24 送达，但这段路实际要 34 分钟，按 12:24 送到要骑 120 km/h。RTPL 在 AI 建议的时间和按最短合规用时（34 分钟）算出的时间里取较晚的一个，骑手和顾客看到的都是 12:34。</p>
   <h4>说明</h4>
   <p>订单、路线、城市和 AI 建议都是模拟数据。保护规则不是我写的。</p>
-  <p class="links"><a href="https://jason-d-e.github.io/rtpl-fit1055/" target="_blank" rel="noopener">在线演示 ↗</a><a href="https://jason-d-e.github.io/rtpl-fit1055/phone.html" target="_blank" rel="noopener">手机原型 ↗</a><a href="https://github.com/Jason-d-e/rtpl-fit1055" target="_blank" rel="noopener">仓库 ↗</a></p>
+  <figure><img loading="lazy" src="assets/rtpl-two-phones.webp" alt="汇报网站：同一笔订单在两部手机上，左边 12:24 未核验，右边 12:34 已核验"><figcaption>汇报网站：同一笔订单，左边没有 RTPL，右边有</figcaption></figure>
+  <figure><img loading="lazy" src="assets/rtpl-check.webp" alt="汇报网站：骑手端、地图和调度台同步显示，调度台里高亮了这次运行的规则行"><figcaption>骑手端、地图、顾客端同步；中间的调度台显示 AI 的数字、RTPL 的计算和这次运行到的那行伪代码</figcaption></figure>
 </template>
 
 <script src="main.js?v=20261116c"></script>
