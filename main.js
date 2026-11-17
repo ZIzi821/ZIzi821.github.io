@@ -230,10 +230,43 @@
     if (canPush) { if (history.state && history.state.sheet) history.replaceState({ sheet: id }, ''); else history.pushState({ sheet: id }, ''); }
     sheet.hidden = false; document.body.classList.add('locked');
     body.scrollTop = 0; body.focus();
+    setupShots(body);
+  }
+
+  /* Screenshot strip: arrow buttons, and a slow drift once it is in view that stops for good as soon as someone touches it. */
+  var shots = { timer: null, io: null };
+  function stopShots() {
+    if (shots.timer) clearInterval(shots.timer); shots.timer = null;
+    if (shots.io) shots.io.disconnect(); shots.io = null;
+  }
+  function setupShots(root) {
+    stopShots();
+    var strip = $('.shots', root);
+    if (!strip) return;
+    var btns = $$('[data-shots]', root), touched = false;
+    function step() { var f = $('figure', strip); return f ? f.getBoundingClientRect().width + 16 : 250; }
+    function atEnd() { return strip.scrollLeft >= strip.scrollWidth - strip.clientWidth - 4; }
+    function update() { btns.forEach(function (b) { b.disabled = +b.getAttribute('data-shots') < 0 ? strip.scrollLeft <= 4 : atEnd(); }); }
+    function halt() { touched = true; stopShots(); }
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () { halt(); strip.scrollBy({ left: +b.getAttribute('data-shots') * step(), behavior: reduce ? 'auto' : 'smooth' }); });
+    });
+    ['pointerdown', 'wheel', 'touchstart', 'keydown'].forEach(function (ev) { strip.addEventListener(ev, halt, { passive: true }); });
+    strip.addEventListener('scroll', update, { passive: true });
+    update();
+    if (reduce || !('IntersectionObserver' in window)) return;
+    shots.io = new IntersectionObserver(function (en) {
+      if (!en[0].isIntersecting || shots.timer || touched) return;
+      shots.timer = setInterval(function () {
+        if (document.hidden || strip.matches(':hover')) return;
+        if (atEnd()) strip.scrollTo({ left: 0, behavior: 'smooth' }); else strip.scrollBy({ left: step(), behavior: 'smooth' });
+      }, 2600);
+    }, { root: body, threshold: 0.6 });
+    shots.io.observe(strip);
   }
   function closeSheet(fromHistory) {
     if (!sheet || sheet.hidden) return;
-    sheet.hidden = true; document.body.classList.remove('locked');
+    sheet.hidden = true; document.body.classList.remove('locked'); stopShots();
     if (lastFocus && lastFocus.focus) lastFocus.focus();
     if (fromHistory !== true && canPush && history.state && history.state.sheet) history.back();
   }

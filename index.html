@@ -7,7 +7,7 @@
 <meta name="description" content="Yanyu Zhu（ZIzi）的作品集：AI 应用的 Prompt、RAG、工作流与评测，以及用 SQL、Python、R 做的数据分析项目。">
 <meta name="theme-color" content="#0b0b0b">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0b0b'/%3E%3Cpath d='M19 20h26L19 44h26' fill='none' stroke='%23d6e2f5' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="style.css?v=20261117d">
+<link rel="stylesheet" href="style.css?v=20261117e">
 </head>
 <body>
 
@@ -291,6 +291,7 @@
   </ul>
   <figure><img loading="lazy" src="assets/cairn-answer.webp" alt="Cairn 的回答卡片：先给一句话结论，下面是规章原文"><figcaption>回答先给一句话结论，下面附规章原文（截自队伍的演示视频）</figcaption></figure>
   <figure><img loading="lazy" src="assets/cairn-poster.webp" alt="Cairn 的封面海报"><figcaption>Cairn 的封面（队伍 README 里的海报）</figcaption></figure>
+  <p class="links"><a href="https://zizi821.github.io/cairn/" target="_blank" rel="noopener">静态演示 ↗</a><a href="https://github.com/ZIzi821/cairn" target="_blank" rel="noopener">Cairn 仓库 ↗</a><a href="https://github.com/ZIzi821/tracedesk-lite" target="_blank" rel="noopener">TraceDesk Lite 仓库 ↗</a></p>
 </template>
 
 <template id="d-app">
@@ -304,6 +305,18 @@
   <p>手机上读音加载慢、偶尔播不出。定位到每次播放都要先加载整段合辑，改成每个单词一个短音频，加上超时重试、合辑回退，并预缓存当天要学的词。</p>
   <h4>怎么用 AI 写代码</h4>
   <p>用 Codex 和 Claude Code 开发：先写清需求、约束和验收标准，每个功能配测试；22 个单元测试文件和 12 个校验脚本全部通过才上传。</p>
+  <h4>真实界面</h4>
+  <div class="shots-wrap">
+    <div class="shots" tabindex="0" aria-label="小程序截图，可以左右滑动">
+      <figure style="--i:0"><img loading="lazy" src="assets/app-home.webp" width="435" height="919" alt="老师首页：待办数量和每个学生的课程进度"><figcaption>老师首页：待办和每个学生的进度</figcaption></figure>
+      <figure style="--i:1"><img loading="lazy" src="assets/app-plan.webp" width="428" height="910" alt="学生的学习计划：第 4 / 7 阶段的目标和达标情况"><figcaption>学习计划：分阶段目标，逐条标记达标</figcaption></figure>
+      <figure style="--i:2"><img loading="lazy" src="assets/app-lessons.webp" width="436" height="916" alt="学生的课程记录列表"><figcaption>课程记录：每节课的内容和课后观察</figcaption></figure>
+      <figure style="--i:3"><img loading="lazy" src="assets/app-new-lesson.webp" width="432" height="918" alt="建立英语课记录的表单"><figcaption>建课：按模板记录，节次自动顺延</figcaption></figure>
+      <figure style="--i:4"><img loading="lazy" src="assets/app-task.webp" width="420" height="910" alt="课后任务：学生提交的朗读录音和老师的确认"><figcaption>课后任务：学生交录音，老师确认</figcaption></figure>
+    </div>
+    <button type="button" class="shots-btn prev" data-shots="-1" aria-label="上一张">←</button><button type="button" class="shots-btn next" data-shots="1" aria-label="下一张">→</button>
+  </div>
+  <p class="shots-note">学生姓名已替换为“学生 A / B / C / D”。</p>
   <p class="links"><a href="https://github.com/ZIzi821/Teaching-Students-English-Program" target="_blank" rel="noopener">仓库 ↗</a><a href="https://github.com/ZIzi821/teachloop-skills" target="_blank" rel="noopener">由它整理出的 AI Skill ↗</a></p>
 </template>
 
@@ -338,9 +351,10 @@
   <p>订单、路线、城市和 AI 建议都是模拟数据。保护规则不是我写的。</p>
   <figure><img loading="lazy" src="assets/rtpl-two-phones.webp" alt="汇报网站：同一笔订单在两部手机上，左边 12:24 未核验，右边 12:34 已核验"><figcaption>汇报网站：同一笔订单，左边没有 RTPL，右边有</figcaption></figure>
   <figure><img loading="lazy" src="assets/rtpl-check.webp" alt="汇报网站：骑手端、地图和调度台同步显示，调度台里高亮了这次运行的规则行"><figcaption>骑手端、地图、顾客端同步；中间的调度台显示 AI 的数字、RTPL 的计算和这次运行到的那行伪代码</figcaption></figure>
+  <p class="links"><a href="https://zizi821.github.io/rtpl-fit1055/" target="_blank" rel="noopener">在线演示 ↗</a><a href="https://zizi821.github.io/rtpl-fit1055/phone.html" target="_blank" rel="noopener">手机原型 ↗</a><a href="https://github.com/ZIzi821/rtpl-fit1055" target="_blank" rel="noopener">仓库 ↗</a></p>
 </template>
 
-<script src="main.js?v=20261116c"></script>
+<script src="main.js?v=20261117e"></script>
 <script src="covers.js?v=20261117b"></script>
 </body>
 </html>
