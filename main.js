@@ -41,7 +41,7 @@
       return (landBits[n >> 3] >> (7 - (n & 7))) & 1;
     }
     var TILT = 23.4 * Math.PI / 180, cT = Math.cos(TILT), sT = Math.sin(TILT), DEG = 180 / Math.PI;
-    var LON0 = 105, SPIN = 4.0;                                   // starts facing East Asia, turns west to east at 4 degrees a second
+    var LON0 = 140, SPIN = 3.0;                                   // the light falls about 37 degrees west of centre, so China opens fully lit; 3 degrees a second, west to east
     function draw(now) {
       var time = (now - t0) / 1000;
       var intro = Math.min(1, time / 1.8), ease = 1 - Math.pow(1 - intro, 3);
